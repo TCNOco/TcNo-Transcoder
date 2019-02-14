@@ -238,7 +238,7 @@ SET multi=1
     ECHO COMPLETE
     ECHO.
     ECHO.
-:: Incriments the argument counter, then loops if there are more to process.
+:: Incriments the argument counter then loops if there are more to process.
 SHIFT
 IF not [%1]==[] GOTO loop
 ECHO.
@@ -249,7 +249,7 @@ PAUSE
 GOTO :eof
 
 :multiCancel
-    :: Ends file if user does not wish to continue.
+    :: Ends file if the user does not wish to continue.
     ECHO Operation cancelled.
     PAUSE
 GOTO :eof

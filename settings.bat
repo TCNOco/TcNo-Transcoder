@@ -1,9 +1,9 @@
 :: ----------------------------------------------------
-:: Welcome to TechNobo's Videod Transcoder settings
+:: Welcome to TechNobo's Video Transcoder settings
 :: ----------------------------------------------------
 :: In here is where all the settings are saved.
 :: Edit them here, or set them manually when rendering
-:: files,or by using -s or --settings.
+:: files, or by using -s or --settings.
 :: -----------------------------------------------------
 
 :: ----------------------------------------------------
@@ -57,11 +57,11 @@ set preset=performance
 set outdp=8
 
 :: CUDA Schedule
-:: set cuda schedule mode (default: sync).
-:: auto  : let cuda driver to decide
-:: spin  : CPU will spin when waiting GPU tasks, will provide highest performance but with high CPU utilization.
-:: yield : CPU will yield when waiting GPU tasks.
-:: sync  : CPU will sleep when waiting GPU tasks, performance might drop slightly, while CPU utilization will be lower, especially on HW decode mode.
+:: set CUDA schedule mode (default: sync).
+:: auto: let CUDA driver to decide
+:: spin  : CPU will spin when waiting for GPU tasks, will provide the highest performance but with high CPU utilization.
+:: yield : CPU will yield when waiting for GPU tasks.
+:: sync  : CPU will sleep when waiting for GPU tasks, performance might drop slightly, while CPU utilization will be lower, especially on HW decode mode.
 set cudasch=spin
 
 :: Input decode to Hardware or Software
@@ -78,7 +78,7 @@ set decodemode=avhw native
 set sar=1:1
 
 :: Lookahead
-:: Enable lookahead and set lookahead depth (1-32). Default is 16 frames.
+:: Enable lookahead and set lookahead depth (1-32). The default is 16 frames.
 set lookahead=16
 
 :: GOP Length
@@ -137,7 +137,7 @@ set deblock=on
 :: cbrhq <int>              set bitrate for CBR (High Quality) mode (kbps)
 set bitrate=cqp 15
 
-:: Set VBR quality (LEAVE BLANK IF NOT USING VRB ABOVE!)
+:: Set VBR quality (LEAVE BLANK IF NOT USING VBR ABOVE!)
 :: target quality for VBR mode (0-51, 0=auto)
 :: set vbrq=<NOTHING/0-51>
 set vbrq=
@@ -153,9 +153,9 @@ set maxbr=
 :: --------------------- OPTIONAL ---------------------
 :: ----------------------------------------------------
 :: set bit=<32/64>    -- Chooses to use 32 or 64 bit Windows. Detects automatically if not set.
-set bit=64
+set bit=
 
-:: Other arguments. Will be appended to the end of command that is run.
+:: Other arguments. Will be appended to the end of the command that is run.
 :: nvencc -arg -arg -arg -[Added Here]
 :: eg. set otherargs=--interlace tff --crop 20,20,20,20 
 ::
