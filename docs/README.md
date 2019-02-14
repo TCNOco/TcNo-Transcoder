@@ -35,6 +35,8 @@ It's simple to use, fast and efficient.
 
 By default; no transcoding to audio is done. You can add such via setting `otherargs` in `settings.bat`
 
+### Check the Wiki for more information: [TcNo Transcoder Wiki](https://github.com/TcNobo/TcNo-Transcoder/wiki)
+
 ## Requirements
 - Windows 7, 8, 8.1, 10 (x86 / x64)
 - **NVENC supported hardware** *(NVIDIA GeForce Kepler gen or later (GT / GTX 6xx or later))*
