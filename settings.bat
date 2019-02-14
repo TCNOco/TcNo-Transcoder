@@ -160,10 +160,10 @@ set bit=64
 :: eg. set otherargs=--interlace tff --crop 20,20,20,20 
 ::
 :: To see what arguments are available, enter either x32 or x64, and run "nvencc --help" or "NVEncC64 -h"
-set otherargs=--test
+set otherargs=
 
 :: Override EVERY other setting.
 :: Leaves only the input and output file automated. Set everything yourself in otherargs.
 :: Set to 1 to enable.
 :: LEAVE BLANK FOR OFF (default)
-set ovrr=1
+set ovrr=
