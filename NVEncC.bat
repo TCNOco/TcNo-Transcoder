@@ -131,6 +131,10 @@ GOTO :start
     ECHO.
     ECHO TROUBLESHOOTING:
     ECHO - Make sure you're using the most updated Nvidia drivers. The project currently uses NVEncC version %nvenccVer%. Make sure you're using Nvidia graphics driver %minNV% or later.
+    ECHO.
+    ECHO.
+    ECHO.
+    ECHO For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki
 GOTO :eof
 
 :info
