@@ -3,7 +3,9 @@
 </p>
 <p align="center">
     <a href="https://tcno.co/">
-        <img alt="Website" src="/docs/img/website.svg"></a>
+        <img alt="Website" src="/docs/img/web.svg"></a>
+    <a href="https://discord.gg/wkJp38m">
+        <img alt="Discord server" src="https://img.shields.io/badge/Website-TCNO.CO-brightgreen.svg&style=flat-square"></a>
     <a href="https://discord.gg/wkJp38m">
         <img alt="Discord server" src="https://img.shields.io/discord/217649733915770880.svg?label=Discord&logo=discord&style=flat-square"></a>
     <a href="https://twitter.com/TcNobo">
