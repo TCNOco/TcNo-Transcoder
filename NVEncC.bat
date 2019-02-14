@@ -182,17 +182,37 @@ IF NOT DEFINED multi (GOTO :fgReturn) ELSE (GOTO :multifgReturn)
 
 :: Sets the string that the program will run. This is what does all the magic.
 :setStr
-SET comStr=%nvexe% -i %inf% --%decodemode% --audio-copy --codec %codec% --fps %fps% --output-res %res% --profile %profile% --level %level% --preset %preset% --lookahead %lookahead% --cuda-schedule %cudasch% --%bitrate% --gop-len %GOPLen% --bframes %bframes% --ref %ref% --mv-precision %mvpr% --colormatrix %cm% --output "%outF%"
-IF DEFINED sar (set comStr=%comStr% --sar %sar%)
-IF DEFINED cabac (set comStr=%comStr% --cabac)
-IF DEFINED deblock (
-    IF "%deblock%"=="on" (set comStr=%comStr% --deblock)
-    IF "%deblock%"=="off" (set comStr=%comStr% --no-deblock)
-)
-IF DEFINED otherargs (set comStr=%comStr% %otherargs%)
+    IF NOT DEFINED ovrr ( GOTO :noOverride ) ELSE ( GOTO :override )
+    :noOverrideReturn
+    :overrideReturn
+
 IF NOT DEFINED multi (GOTO :setStrReturn) ELSE (GOTO :multiStrReturn)
 
+:: Setting string when no override defined.
+:noOverride
+    SET comStr=%nvexe% -i %inf% --%decodemode% --audio-copy --codec %codec% --fps %fps% --output-res %res% --profile %profile% --level %level% --preset %preset% --lookahead %lookahead% --cuda-schedule %cudasch% --%bitrate% --gop-len %GOPLen% --bframes %bframes% --ref %ref% --mv-precision %mvpr% --colormatrix %cm% --output "%outF%"
+    IF DEFINED sar (set comStr=%comStr% --sar %sar%)
+    IF DEFINED cabac (set comStr=%comStr% --cabac)
+    IF DEFINED deblock (
+        IF "%deblock%"=="on" (set comStr=%comStr% --deblock)
+        IF "%deblock%"=="off" (set comStr=%comStr% --no-deblock)
+    )
+    IF DEFINED otherargs (set comStr=%comStr% %otherargs%)
+GOTO :noOverrideReturn
 
+:: Setting string when override defined
+:override
+    IF DEFINED otherargs (
+        SET comStr=%nvexe% -i %inf% --output "%outF%" %otherargs%
+    ) ELSE (
+        ECHO.
+        ECHO ERROR:
+        ECHO No other settings were found in "otherargs".
+        ECHO Check your settings and relaunch
+        PAUSE
+        GOTO :eof
+    )
+GOTO :overrideReturn
 :processMulti
 :: Tells :FolderGiven, :NoFolderGiven and :setStr where to return to
 SET multi=1
