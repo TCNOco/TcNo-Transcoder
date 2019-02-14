@@ -1,4 +1,16 @@
-![TcNo Transcoder Banner](/docs/img/banner1.png)
+<p align="center">
+    <img src="/docs/img/banner1.png">
+</p>
+<p align="center">
+    <a href="https://tcno.co/">
+        <img alt="Website" src="/docs/img/website.svg"></a>
+    <a href="https://discord.gg/wkJp38m">
+        <img alt="Discord server" src="https://img.shields.io/discord/217649733915770880.svg?label=Discord&logo=discord&style=flat-square"></a>
+    <a href="https://twitter.com/TcNobo">
+        <img alt="Twitter" src="https://img.shields.io/twitter/follow/TcNobo.svg?label=Follow%20%40TcNobo&logo=Twitter&style=flat-square"></a>
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/TcNobo/TcNo-Transcoder.svg?label=Last%20commit&logo=GitHub&style=flat-square">
+    <img alt="Repo size" src="https://img.shields.io/github/repo-size/TcNobo/TcNo-Transcoder.svg?label=Repo%20size&logo=GitHub&style=flat-square">
+</p>
 
 This is a simple Windows based video transcoder, that **copies ALL audio tracks**. It's **simple**, and **extremely fast**, utilizing Nvidia's NVENC.
 
