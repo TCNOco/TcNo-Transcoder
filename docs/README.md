@@ -1,5 +1,7 @@
+
 <p align="center">
-    <img src="/docs/img/banner1.png">
+    <a href="">
+	<img src="/docs/img/banner1.png"></a>
 </p>
 <p align="center">
     <a href="https://tcno.co/">
@@ -23,8 +25,12 @@ It's simple to use, fast and efficient.
 
  1. Download this repo as a .zip and extract it.
  2. Edit `settings.bat` to your liking.
- 3. Start `NVEncC.bat` with Command Prompt
- 4. Drag and Drop a video file in.
+ 3. Either:
+	 -	For single file transcoding:
+		 - Start `NVEncC.bat` with Command Prompt.
+		 - Drag and Drop a video file in.
+	- For multiple file transcoding:
+		- Drag and Drop one or more video files onto the actual `NVEncC.bat` file.
  5. Follow the steps, and you'll have yourself a transcoded file in no time!
 
 By default; no transcoding to audio is done. You can add such via setting `otherargs` in `settings.bat`
@@ -37,7 +43,7 @@ By default; no transcoding to audio is done. You can add such via setting `other
 ](https://github.com/rigaya/NVEnc/releases) Min NVIDIA graphics driver version: **334.89**
 
 
-## Planned
+### Planned:
 FFMPEG support is planned, instead of NVEncC, and possibly more in the future.
 If you have anything to add, then don't be afraid :)
 
