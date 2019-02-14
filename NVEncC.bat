@@ -1,4 +1,5 @@
 @ECHO OFF
+:start
 :: Load variables
 CALL settings.bat
 :: Static variables. DO NOT EDIT
@@ -50,6 +51,7 @@ IF DEFINED deblock (
     IF "%deblock%"=="on" (set comStr=%comStr% --deblock)
     IF "%deblock%"=="off" (set comStr=%comStr% --no-deblock)
 )
+IF DEFINED otherargs (set comStr=%comStr% %otherargs%)
 
 echo %comStr%
 
@@ -63,8 +65,7 @@ CD ../
 ECHO.
 ECHO.
 ECHO Program is finished!
-pause
-GOTO :eof
+GOTO :start
 
 :help
 ECHO Hello. Welcome to TechNobo's Video Transcoder %batVer%, built for generating Proxy files with multitrack audio quickly.
