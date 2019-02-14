@@ -1,4 +1,4 @@
-![TcNo Transcoder Banner](/img/TCNOTranscoderTitleBanner-min.png)
+![TcNo Transcoder Banner](/docs/img/TCNOTranscoderTitleBanner-min.png)
 # TechNobo's Transcoder
 
 This is a simple Windows based video transcoder, that **copies ALL audio tracks**. It's **simple**, and **extremely fast**, utilizing Nvidia's NVENC.
