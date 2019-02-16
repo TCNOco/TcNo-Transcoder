@@ -12,6 +12,17 @@
 :: Output format
 set outFM=mp4
 
+:: Copy the audio?
+:: Yes = 1, No = Leave it blank.
+:: Converting from WEBM to MP4, with Opus audio causes issues, for example.
+set audiocopy=1
+
+:: Audio codec
+:: (REQUIRES audiocopy setting above to be BLANK!)
+:: To check available encoders, start TcNo-Transcoder.bat with the -a or --audio argument.
+:: OR enter either x32 or x64, and run "nvencc --check-encoders" or "NVEncC64 --check-encoders"
+set audiocodec=
+
 :: Ouput suffix
 :: What goes after the file, just before the extension
 :: set suf=_Proxy >> eg: test_Proxy.mp4
@@ -25,7 +36,7 @@ set outFLD=
 
 :: Resolution of the output file.
 :: eg. <640x360/1920x1080 etc> 
-set res=640x360
+set res=3840x2160
 
 :: FPS of the output file.
 :: set fps=<24/30/60/120/144 etc>
@@ -33,7 +44,8 @@ set fps=60
 
 :: Codec of the output file.
 :: set codec=<h264/h265>
-:: To see what arguments are available, enter either x32 or x64, and run "nvencc --check-formats" or "NVEncC64 --check-formats"
+:: To check available encoders, start TcNo-Transcoder.bat with the -v or --video argument.
+:: OR enter either x32 or x64, and run "nvencc --check-formats" or "NVEncC64 --check-formats"
 set codec=h264
 
 :: Output profile
