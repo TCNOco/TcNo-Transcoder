@@ -129,7 +129,7 @@ GOTO pgStart
     ECHO INFORMATION OPTIONS:
     ECHO -h, --help             Displays this help INFORMATION
     ECHO -i, --info             Displays program + author info
-    ECHO -d, --devices          Displays available GPUs for encoding
+    ECHO -d, --devices          Displays available GPUs
     ECHO -a, --audio            Displays available input + output audio codecs/formats
     ECHO -v, --video            Displays available input + output video codecs/formats
     ECHO.
