@@ -36,7 +36,7 @@ set outFLD=
 
 :: Resolution of the output file.
 :: eg. <640x360/1920x1080 etc> 
-set res=3840x2160
+set res=640x360
 
 :: FPS of the output file.
 :: set fps=<24/30/60/120/144 etc>
