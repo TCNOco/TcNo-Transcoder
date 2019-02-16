@@ -152,6 +152,13 @@ set maxbr=
 :: ----------------------------------------------------
 :: --------------------- OPTIONAL ---------------------
 :: ----------------------------------------------------
+:: Choose a GPU to use
+:: To get a list of GPU's, run the command "NVEncC --check-device" or "NVEncC64 --check-device"
+:: MAKE SURE YOU KNOW WHAT GPU YOU'RE SETTING IT TO!
+:: Leave this BLANK to let NVEncC choose the best card automatically.
+:: set gpu=<int>    eg. set gpu=1
+set gpu=
+
 :: set bit=<32/64>    -- Chooses to use 32 or 64 bit Windows. Detects automatically if not set.
 set bit=
 

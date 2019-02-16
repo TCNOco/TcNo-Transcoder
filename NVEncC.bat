@@ -10,16 +10,13 @@ cd /d "%~dp0"
 :: Load variables
 CALL settings.bat
 :: Static variables. DO NOT EDIT
-SET batVer=1.1
+SET batVer=1.2
 SET nvenccVer=4.31
 SET minNV=418.81
 
 :: Checking if 32 or 64 bit, if not set prior.
-IF NOT DEFINED bit (
-    REG Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32BIT || SET OS=64BIT
-    IF %OS%==32BIT SET bit=32
-    IF %OS%==64BIT SET bit=64
-)
+IF NOT DEFINED bit ( GOTO :getbit )
+:getbitReturn
 
 :: Setting executable to the correct version
 IF "%bit%"=="32" (set nvexe=NVEncC.exe) ELSE (set nvexe=NVEncC64.exe)
@@ -167,6 +164,12 @@ GOTO :eof
 ::---------------------------------------
 :: ------------- FUNCTIONS -------------
 ::---------------------------------------
+:: Check if Windows is x32 or x64, unless otherwise specified.
+:getbit
+REG Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32BIT || SET OS=64BIT
+    IF %OS%==32BIT SET bit=32
+    IF %OS%==64BIT SET bit=64
+GOTO :getbitReturn
 :: Sets the output file and folder, depending on whether the user set the output folder, or not.
 :: Runs when the output folder is set manually:
 :FolderGiven
@@ -178,27 +181,31 @@ IF NOT DEFINED multi (GOTO :fgReturn) ELSE (GOTO :multifgReturn)
 :NoFolderGiven
     FOR %%f IN (%inF%) DO set fn=%%~dpnf
     set outF=%fn%%suf%.%outFM%
-IF NOT DEFINED multi (GOTO :fgReturn) ELSE (GOTO :multifgReturn)
+    IF NOT DEFINED multi (GOTO :fgReturn) ELSE (GOTO :multifgReturn)
 
 :: Sets the string that the program will run. This is what does all the magic.
 :setStr
     IF NOT DEFINED ovrr ( GOTO :noOverride ) ELSE ( GOTO :override )
     :noOverrideReturn
     :overrideReturn
-
-IF NOT DEFINED multi (GOTO :setStrReturn) ELSE (GOTO :multiStrReturn)
+    IF NOT DEFINED multi  (GOTO :setStrReturn ) ELSE ( GOTO :multiStrReturn )
 
 :: Setting string when no override defined.
 :noOverride
     SET comStr=%nvexe% -i %inf% --%decodemode% --audio-copy --codec %codec% --fps %fps% --output-res %res% --profile %profile% --level %level% --preset %preset% --lookahead %lookahead% --cuda-schedule %cudasch% --%bitrate% --gop-len %GOPLen% --bframes %bframes% --ref %ref% --mv-precision %mvpr% --colormatrix %cm% --output "%outF%"
     IF DEFINED sar (set comStr=%comStr% --sar %sar%)
     IF DEFINED cabac (set comStr=%comStr% --cabac)
-    IF DEFINED deblock (
-        IF "%deblock%"=="on" (set comStr=%comStr% --deblock)
-        IF "%deblock%"=="off" (set comStr=%comStr% --no-deblock)
-    )
+    IF DEFINED deblock ( GOTO :deblock )
+    :deblockReturn
+    IF DEFINED gpu (set comStr=%comStr% --device %gpu%)
     IF DEFINED otherargs (set comStr=%comStr% %otherargs%)
 GOTO :noOverrideReturn
+
+:: Enables or disables the Deblock flag, if set in settings.bat
+:deblock
+    IF "%deblock%"=="on" (set comStr=%comStr% --deblock)
+    IF "%deblock%"=="off" (set comStr=%comStr% --no-deblock)
+GOTO :deblockReturn
 
 :: Setting string when override defined
 :override
