@@ -1,7 +1,7 @@
 @ECHO OFF
 setlocal enableExtensions disableDelayedExpansion
 title TechNobo's Transcoder - NVEncC
-:start
+:pgStart
 ::---------------------------------------
 :: ------------ VARIABLE DEF ------------
 ::---------------------------------------
@@ -15,7 +15,7 @@ SET nvenccVer=4.31
 SET minNV=418.81
 
 :: Checking if 32 or 64 bit, if not set prior.
-IF NOT DEFINED bit ( GOTO :getbit )
+IF NOT DEFINED bit ( GOTO getbit )
 :getbitReturn
 
 :: Setting executable to the correct version
@@ -28,19 +28,21 @@ CD x%bit%
 :: ------------- ARGUMENTS -------------
 ::---------------------------------------
 :: Checks for arguments, like -h or --help
-IF "%~1"=="-h" (goto help)
-IF "%~1"=="--help" (goto help)
-IF "%~1"=="-i" (goto info)
-IF "%~1"=="--info" (goto info)
+IF "%~1"=="-h" ( GOTO help )
+IF "%~1"=="--help" ( GOTO help )
+IF "%~1"=="-i" ( GOTO info )
+IF "%~1"=="--info" ( GOTO info )
+IF "%~1"=="-d" ( GOTO devices )
+IF "%~1"=="--devices" ( GOTO devices )
 :: Show welcome screen
-GOTO :welcome
+GOTO welcome
 :welcomeReturn
 
 :: Checks if a file (or multiple files) were dragged onto the .bat
 :: They will be processed instantly, without further warning than "Do you wish to continue?"
 :: If you're going to do this, test the settings beforehand, but running this .bat, and following the steps with 1 file.
 :: If you are happy with the results, then feel free to continue.
-IF [%1]==[] GOTO :skip
+IF [%1]==[] GOTO skip
 ECHO ATTENTION!
 ECHO Dragging files in will process them INSTANTLY using the settings in settings.bat!
 ECHO.
@@ -49,7 +51,7 @@ ECHO %*
 ECHO.
 set /p sure="Are you sure you wish to continue? (y/n): "
 
-IF "%sure%"=="y" ( GOTO :processMulti ) ELSE ( GOTO :multiCancel )
+IF "%sure%"=="y" ( GOTO processMulti ) ELSE ( GOTO multiCancel )
 ::---------------------------------------
 
 
@@ -62,7 +64,7 @@ IF "%sure%"=="y" ( GOTO :processMulti ) ELSE ( GOTO :multiCancel )
 SET /p inF="Drag and Drop input file into here: "
 ECHO.
 :: Sets outF to the output file, with the format defined in settings.bat
-IF DEFINED outFLD (goto :FolderGiven) ELSE (goto :NoFolderGiven)
+IF DEFINED outFLD ( GOTO FolderGiven ) ELSE ( GOTO NoFolderGiven )
 :fgReturn
 
 :: Enter respective version's folder.
@@ -80,7 +82,7 @@ ECHO This command will be run:
 ECHO.
 
 :: Sets string that it will run
-GOTO :setStr
+GOTO setStr
 :setStrReturn
 
 echo %comStr%
@@ -96,11 +98,11 @@ IF "%corr%"=="n" (echo Stopped.)
 CD ../
 ECHO.
 ECHO.
-GOTO :thanks
+GOTO thanks
 :thanksReturn
 ECHO.
 :: Loops back to the start of the program
-GOTO :start
+GOTO pgStart
 ::---------------------------------------
 
 
@@ -156,7 +158,14 @@ GOTO :eof
     ECHO.
     ECHO.
     ECHO Happy transcoding :)
+GOTO :eof
 
+:devices
+    cls
+    ECHO NOTE:
+    ECHO When manually setting: use 0, 1, or any other integer, next to the GPU of your choice 
+    ECHO The following GPU's are available for NVEncC transcoding:
+    %nvexe% --check-device
 GOTO :eof
 ::---------------------------------------
 
@@ -169,43 +178,43 @@ GOTO :eof
 REG Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32BIT || SET OS=64BIT
     IF %OS%==32BIT SET bit=32
     IF %OS%==64BIT SET bit=64
-GOTO :getbitReturn
+GOTO getbitReturn
 :: Sets the output file and folder, depending on whether the user set the output folder, or not.
 :: Runs when the output folder is set manually:
 :FolderGiven
     for %%f in (%inF%) do set fnW=%%~nf
     set outF=%outFLD%\%fnW%%suf%.%outFM%
-IF NOT DEFINED multi (GOTO :fgReturn) ELSE (GOTO :multifgReturn)
+IF NOT DEFINED multi ( GOTO fgReturn ) ELSE ( GOTO multifgReturn )
 
 :: Runs when the output folder is NOT set manually:
 :NoFolderGiven
     FOR %%f IN (%inF%) DO set fn=%%~dpnf
     set outF=%fn%%suf%.%outFM%
-    IF NOT DEFINED multi (GOTO :fgReturn) ELSE (GOTO :multifgReturn)
+    IF NOT DEFINED multi ( GOTO fgReturn ) ELSE ( GOTO multifgReturn )
 
 :: Sets the string that the program will run. This is what does all the magic.
 :setStr
-    IF NOT DEFINED ovrr ( GOTO :noOverride ) ELSE ( GOTO :override )
+    IF NOT DEFINED ovrr ( GOTO noOverride ) ELSE ( GOTO override )
     :noOverrideReturn
     :overrideReturn
-    IF NOT DEFINED multi  (GOTO :setStrReturn ) ELSE ( GOTO :multiStrReturn )
+    IF NOT DEFINED multi  ( GOTO setStrReturn ) ELSE ( GOTO multiStrReturn )
 
 :: Setting string when no override defined.
 :noOverride
     SET comStr=%nvexe% -i %inf% --%decodemode% --audio-copy --codec %codec% --fps %fps% --output-res %res% --profile %profile% --level %level% --preset %preset% --lookahead %lookahead% --cuda-schedule %cudasch% --%bitrate% --gop-len %GOPLen% --bframes %bframes% --ref %ref% --mv-precision %mvpr% --colormatrix %cm% --output "%outF%"
     IF DEFINED sar (set comStr=%comStr% --sar %sar%)
     IF DEFINED cabac (set comStr=%comStr% --cabac)
-    IF DEFINED deblock ( GOTO :deblock )
+    IF DEFINED deblock ( GOTO deblock )
     :deblockReturn
     IF DEFINED gpu (set comStr=%comStr% --device %gpu%)
     IF DEFINED otherargs (set comStr=%comStr% %otherargs%)
-GOTO :noOverrideReturn
+GOTO noOverrideReturn
 
 :: Enables or disables the Deblock flag, if set in settings.bat
 :deblock
     IF "%deblock%"=="on" (set comStr=%comStr% --deblock)
     IF "%deblock%"=="off" (set comStr=%comStr% --no-deblock)
-GOTO :deblockReturn
+GOTO deblockReturn
 
 :: Setting string when override defined
 :override
@@ -219,40 +228,41 @@ GOTO :deblockReturn
         PAUSE
         GOTO :eof
     )
-GOTO :overrideReturn
+GOTO overrideReturn
+
 :processMulti
-:: Tells :FolderGiven, :NoFolderGiven and :setStr where to return to
-SET multi=1
+    :: Tells :FolderGiven, :NoFolderGiven and :setStr where to return to
+    SET multi=1
 
-:: Loops through each file dragged onto the .bat
-:loop
-    ECHO %1
-    SET inF=%1
-    :: Gets output file and directory
-    IF DEFINED outFLD (goto :FolderGiven) ELSE (goto :NoFolderGiven)
-    :multifgReturn
+    :: Loops through each file dragged onto the .bat
+    :loop
+        ECHO %1
+        SET inF=%1
+        :: Gets output file and directory
+        IF DEFINED outFLD ( GOTO FolderGiven) ELSE ( GOTO NoFolderGiven)
+        :multifgReturn
 
-    :: Sets string that it will run, and then runs it.
-    GOTO :setStr
-    :multiStrReturn
+        :: Sets string that it will run, and then runs it.
+        GOTO setStr
+        :multiStrReturn
+        ECHO.
+        ECHO PROCESSING:
+        ECHO %comStr%
+        ECHO.
+        ECHO.
+        %comStr%
+        ECHO.
+        ECHO COMPLETE
+        ECHO.
+        ECHO.
+    :: Incriments the argument counter then loops if there are more to process.
+    SHIFT
+    IF not [%1]==[] GOTO loop
     ECHO.
-    ECHO PROCESSING:
-    ECHO %comStr%
     ECHO.
-    ECHO.
-    %comStr%
-    ECHO.
-    ECHO COMPLETE
-    ECHO.
-    ECHO.
-:: Incriments the argument counter then loops if there are more to process.
-SHIFT
-IF not [%1]==[] GOTO loop
-ECHO.
-ECHO.
-GOTO :thanks
-:thanksMultiReturn
-PAUSE
+    GOTO thanks
+    :thanksMultiReturn
+    PAUSE
 GOTO :eof
 
 :multiCancel
@@ -262,21 +272,20 @@ GOTO :eof
 GOTO :eof
 
 :welcome
-ECHO Welcome to TechNobo's Video Transcoder %batVer%
-ECHO ------------------------
-ECHO Run with -h or --help to display help.
-ECHO Run with -i or --info to display info.
-ECHO ------------------------
-ECHO.
-GOTO :welcomeReturn
+    ECHO Welcome to TechNobo's Video Transcoder %batVer%
+    ECHO ------------------------
+    ECHO Run with -h or --help to display help.
+    ECHO Run with -i or --info to display info.
+    ECHO ------------------------
+    ECHO.
+GOTO welcomeReturn
 
 :thanks
-ECHO Everything complete.
-ECHO Thanks for using TechNobo's Transcoder!
-ECHO ---------------------
-ECHO GitHub: https://github.com/TcNobo/TcNo-Transcoder
-ECHO YouTube: https://YouTube.com/TechNobo
-ECHO Web: https://tcno.co/
-IF NOT DEFINED multi (GOTO :thanksReturn) ELSE (GOTO :thanksMultiReturn)
-
+    ECHO Everything complete.
+    ECHO Thanks for using TechNobo's Transcoder!
+    ECHO ---------------------
+    ECHO GitHub: https://github.com/TcNobo/TcNo-Transcoder
+    ECHO YouTube: https://YouTube.com/TechNobo
+    ECHO Web: https://tcno.co/
+IF NOT DEFINED multi ( GOTO thanksReturn ) ELSE ( GOTO thanksMultiReturn )
 ::---------------------------------------
