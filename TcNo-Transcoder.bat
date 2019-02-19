@@ -1,6 +1,13 @@
 @ECHO OFF
 setlocal enableExtensions disableDelayedExpansion
 title TechNobo's Transcoder - NVEncC
+
+::---------------------------------------------------------
+:: TcNo-Transcoder
+:: Created by TechNobo: https://tcno.co/
+:: GitHub Repo: https://github.com/TcNobo/TcNo-Transcoder
+::---------------------------------------------------------
+
 :pgStart
 ::---------------------------------------
 :: ------------ VARIABLE DEF ------------
@@ -10,9 +17,14 @@ cd /d "%~dp0"
 :: Load variables
 CALL settings.bat
 :: Static variables. DO NOT EDIT
-SET batVer=1.3
+SET batVer=1.4
 SET nvenccVer=4.31
+:: NvencC 4.31 info:
+:: - Released: 12/02/2019
+:: - GitHub: https://github.com/rigaya/NVEnc/releases
 SET minNV=418.81
+:: Minimum Nvidia Graphics Driver version
+:: Download updates from: https://www.nvidia.com/Download/index.aspx
 
 :: Checking if 32 or 64 bit, if not set prior.
 IF NOT DEFINED bit ( GOTO getbit )
@@ -290,25 +302,45 @@ GOTO overrideReturn
 
     :: Loops through each file dragged onto the .bat
     :loop
-        ECHO %1
-        SET inF=%1
-        :: Gets output file and directory
-        IF DEFINED outFLD ( GOTO FolderGiven) ELSE ( GOTO NoFolderGiven)
-        :multifgReturn
+        :: Checks if it's a folder
+        FOR %%i IN (%1) DO IF EXIST %%~si\NUL ( GOTO fldr ) ELSE ( GOTO notFldr )
+        :fldr
+            :: FOLDER
+            SET fld=1
+            ECHO ---------------------------
+            ECHO Discovering files in folder: %1
+            SET i=0
+            :: Lists files in folder, and counts
+            FOR %%i IN (%1\*.*) DO (
+                :: Only runs if it's a file, and not a folder. Only works one folder deep, and doesn't check subfolders, for now. Functionality may be changed later.
+                FOR %%f IN (%%i) DO IF NOT EXIST %%~sf\NUL (
+                    ECHO -    %%i
+                    SET /A i+=1
+                )
+            )
+            ECHO ---------------------------
+            ECHO PROCESSING %i% FILES
+            ECHO ---------------------------
 
-        :: Sets string that it will run, and then runs it.
-        GOTO setStr
-        :multiStrReturn
-        ECHO.
-        ECHO PROCESSING:
-        ECHO %comStr%
-        ECHO.
-        ECHO.
-        %comStr%
-        ECHO.
-        ECHO COMPLETE
-        ECHO.
-        ECHO.
+            :: Processes each file in folder
+            FOR %%i IN (%1\*.*) DO ( 
+                :: Runs only if it's a file and not a folder.
+                FOR %%f IN (%%i) DO IF NOT EXIST %%~sf\NUL ( 
+                        SET inF=%%i
+                        CALL :processFile 
+                    )
+            )
+            ECHO ---------------------------
+            ECHO FOLDER %1 COMPLETE
+            ECHO ---------------------------
+            GOTO nextArg
+        :notFldr
+            :: NOT A FOLDER
+            SET fld=0
+            SET inF=%1
+            GOTO processFile
+            :processFileReturn
+        :nextArg
     :: Incriments the argument counter then loops if there are more to process.
     SHIFT
     IF not [%1]==[] GOTO loop
@@ -318,6 +350,24 @@ GOTO overrideReturn
     :thanksMultiReturn
     PAUSE
 GOTO :eof
+
+:processFile
+    :: Gets output file and directory
+    IF DEFINED outFLD ( GOTO FolderGiven) ELSE ( GOTO NoFolderGiven)
+    :multifgReturn
+
+    :: Sets string that it will run, and then runs it.
+    GOTO setStr
+    :multiStrReturn
+    ECHO.
+    ECHO PROCESSING:
+    ECHO %comStr%
+    ECHO.
+    %comStr%
+    ECHO.
+    ECHO COMPLETE
+    ECHO.
+IF "%fld%"=="0" ( GOTO processFileReturn ) ELSE ( exit /b )
 
 :multiCancel
     :: Ends file if the user does not wish to continue.
