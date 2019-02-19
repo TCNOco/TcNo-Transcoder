@@ -25,6 +25,7 @@ SET nvenccVer=4.31
 SET minNV=418.81
 :: Minimum Nvidia Graphics Driver version
 :: Download updates from: https://www.nvidia.com/Download/index.aspx
+SET processQueue=false
 
 :: Checking if 32 or 64 bit, if not set prior.
 IF NOT DEFINED bit ( GOTO getbit )
@@ -50,6 +51,8 @@ IF "%~1"=="-a" ( GOTO audio )
 IF "%~1"=="--audio" ( GOTO audio )
 IF "%~1"=="-v" ( GOTO video )
 IF "%~1"=="--video" ( GOTO video )
+IF "%~1"=="-q" ( GOTO startQueueProcessing )
+IF "%~1"=="--queue" ( GOTO startQueueProcessing )
 :: Show welcome screen
 GOTO welcome
 :welcomeReturn
@@ -62,9 +65,9 @@ GOTO welcome
 IF [%1]==[] GOTO skip
 :: Check if program will skip this check. For use with Queue
 IF NOT EXIST "..\skipcheck" ( GOTO skipFalse )
-SET sure=y
 :: Deletes skipcheck boolean file
 DEL "..\skipcheck" /q
+SET sure=y
 :: Deletes queue, unless otherwise specified (by default)
 IF DEFINED delOldQueue ( DEL "..\extra\queue.txt" && GOTO skipcheck) 
 :: Get local date and time, to rename queue file
@@ -72,9 +75,6 @@ for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 
 set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2% %ldt:~8,2%-%ldt:~10,2%-%ldt:~12,2%
 :: TODO: Remove the milliseconds. Split at ., and keep only the first half
 :: Rename old queue file
-ECHO queue-%ldt::=-%.txt
-ECHO %cd%
-ECHO "..\extra\queue.txt" "queue-%ldt%.txt"
 REN "..\extra\queue.txt" "queue-%ldt%.txt"
 GOTO skipcheck
 
@@ -168,6 +168,7 @@ GOTO pgStart
     ECHO -d, --devices          Displays available GPUs
     ECHO -a, --audio            Displays available input + output audio codecs/formats
     ECHO -v, --video            Displays available input + output video codecs/formats
+    ECHO -q, --queue            Instantly start processing your current queue
     ECHO.
     ECHO ---------------------------------------
     ECHO.
@@ -419,8 +420,13 @@ IF "%fld%"=="0" ( GOTO processFileReturn ) ELSE ( exit /b )
     PAUSE
 GOTO :eof
 
+:startQueueProcessing
+    SET processQueue=true
+GOTO queue
+
 :queue
     :: Return, if the user doesn't want to process it.
+    IF "%processQueue%"=="true" ( GOTO skipQq )
     set /p sure="There is a queue. Would you like to process it? (y/n): "
     IF NOT "%sure%"=="y" ( GOTO queueCancel )
     :: User wants to process the queue:
@@ -435,6 +441,7 @@ GOTO :eof
     IF NOT "%sure%"=="y" ( GOTO queueStop )
     :: User wants to process the files
     :: Create a new argument string, with all the files in it
+    :skipQq
     SET newStr=
     FOR /F "usebackq tokens=*" %%A in ("../extra/queue.txt") DO ( CALL SET "newStr=%%newStr%% %%A" )
     :: Will skip the check when the program is started again
