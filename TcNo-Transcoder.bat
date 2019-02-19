@@ -54,11 +54,31 @@ IF "%~1"=="--video" ( GOTO video )
 GOTO welcome
 :welcomeReturn
 
+
 :: Checks if a file (or multiple files) were dragged onto the .bat
 :: They will be processed instantly, without further warning than "Do you wish to continue?"
 :: If you're going to do this, test the settings beforehand, but running this .bat, and following the steps with 1 file.
 :: If you are happy with the results, then feel free to continue.
 IF [%1]==[] GOTO skip
+:: Check if program will skip this check. For use with Queue
+IF NOT EXIST "..\skipcheck" ( GOTO skipFalse )
+SET sure=y
+:: Deletes skipcheck boolean file
+DEL "..\skipcheck" /q
+:: Deletes queue, unless otherwise specified (by default)
+IF DEFINED delOldQueue ( DEL "..\extra\queue.txt" && GOTO skipcheck) 
+:: Get local date and time, to rename queue file
+for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
+set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2% %ldt:~8,2%-%ldt:~10,2%-%ldt:~12,6%
+:: TODO: Remove the milliseconds. Split at ., and keep only the first half
+:: Rename old queue file
+ECHO queue-%ldt::=-%.txt
+ECHO %cd%
+ECHO "..\extra\queue.txt" "queue-%ldt%.txt"
+REN "..\extra\queue.txt" "queue-%ldt%.txt"
+GOTO skipcheck
+
+:skipFalse
 ECHO ATTENTION!
 ECHO Dragging files in will process them INSTANTLY using the settings in settings.bat!
 ECHO.
@@ -67,6 +87,7 @@ ECHO %*
 ECHO.
 set /p sure="Are you sure you wish to continue? (y/n): "
 
+:skipcheck
 IF "%sure%"=="y" ( GOTO processMulti ) ELSE ( GOTO multiCancel )
 ::---------------------------------------
 
@@ -76,6 +97,9 @@ IF "%sure%"=="y" ( GOTO processMulti ) ELSE ( GOTO multiCancel )
 ::---------------------------------------
 :: If no arguments were added, the program will start here
 :skip
+:: Check if extra/queue.txt exists, and if it does, ask the user if they want to process every file in it.
+IF EXIST "../extra/queue.txt" ( GOTO queue ) ELSE ( ECHO false )
+:queueCancel
 
 SET /p inF="Drag and Drop input file into here: "
 ECHO.
@@ -372,6 +396,37 @@ IF "%fld%"=="0" ( GOTO processFileReturn ) ELSE ( exit /b )
 :multiCancel
     :: Ends file if the user does not wish to continue.
     ECHO Operation cancelled.
+    PAUSE
+GOTO :eof
+
+:queue
+    :: Return, if the user doesn't want to process it.
+    set /p sure="There is a queue. Would you like to process it? (y/n): "
+    IF NOT "%sure%"=="y" ( GOTO queueCancel )
+    :: User wants to process the queue:
+    ECHO --------------------------------------
+    ECHO The following files will be processed
+    ECHO --------------------------------------
+    FOR /F "usebackq tokens=*" %%A in ("../extra/queue.txt") DO ECHO %%A
+    ECHO --------------------------------------
+    ECHO.
+    ECHO You can edit the queue in the TcNo-Transcoder/extra/queue.txt file.
+    set /p sure="Do you want to process these files? (y/n): "
+    IF NOT "%sure%"=="y" ( GOTO queueStop )
+    :: User wants to process the files
+    :: Create a new argument string, with all the files in it
+    SET newStr=
+    FOR /F "usebackq tokens=*" %%A in ("../extra/queue.txt") DO ( CALL SET "newStr=%%newStr%% %%A" )
+    :: Will skip the check when the program is started again
+    ECHO 1 > ../skipcheck
+    cd ../
+    START "" TcNo-Transcoder.bat %newStr%
+
+GOTO :eof
+
+:queueStop
+    ECHO.
+    ECHO Queue processing cancelled.
     PAUSE
 GOTO :eof
 
