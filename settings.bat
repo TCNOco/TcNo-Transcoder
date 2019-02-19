@@ -186,3 +186,9 @@ set otherargs=
 :: Set to 1 to enable.
 :: LEAVE BLANK FOR OFF (default)
 set ovrr=
+
+:: Delete queue when processing started
+:: If set to 1, the queue file will be deleted BEFORE proccesing.
+:: If processing fails, you will have to remake the queue
+:: Default is blank
+set delOldQueue=
