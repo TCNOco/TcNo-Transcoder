@@ -1,4 +1,5 @@
 
+
 <p align="center">
     <a href="">
 	<img src="/docs/img/banner1.png"></a>
@@ -31,6 +32,8 @@ It's simple to use, fast and efficient.
 		 - Drag and Drop a video file in.
 	- For multiple file transcoding:
 		- Drag and Drop one or more video files onto the actual `NVEncC.bat` file.
+	- Queue up multiple files for later transcoding:
+		- See [Queueing](https://github.com/TcNobo/TcNo-Transcoder/wiki/Queueing) 
  5. Follow the steps, and you'll have yourself a transcoded file in no time!
 
 By default; no transcoding to audio is done. You can add such via setting `otherargs` in `settings.bat`
