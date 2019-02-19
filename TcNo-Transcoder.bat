@@ -17,7 +17,7 @@ cd /d "%~dp0"
 :: Load variables
 CALL settings.bat
 :: Static variables. DO NOT EDIT
-SET batVer=1.4
+SET batVer=1.5
 SET nvenccVer=4.31
 :: NvencC 4.31 info:
 :: - Released: 12/02/2019
@@ -69,7 +69,7 @@ DEL "..\skipcheck" /q
 IF DEFINED delOldQueue ( DEL "..\extra\queue.txt" && GOTO skipcheck) 
 :: Get local date and time, to rename queue file
 for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
-set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2% %ldt:~8,2%-%ldt:~10,2%-%ldt:~12,6%
+set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2% %ldt:~8,2%-%ldt:~10,2%-%ldt:~12,2%
 :: TODO: Remove the milliseconds. Split at ., and keep only the first half
 :: Rename old queue file
 ECHO queue-%ldt::=-%.txt
@@ -98,7 +98,7 @@ IF "%sure%"=="y" ( GOTO processMulti ) ELSE ( GOTO multiCancel )
 :: If no arguments were added, the program will start here
 :skip
 :: Check if extra/queue.txt exists, and if it does, ask the user if they want to process every file in it.
-IF EXIST "../extra/queue.txt" ( GOTO queue ) ELSE ( ECHO false )
+IF EXIST "../extra/queue.txt" ( GOTO queue )
 :queueCancel
 
 SET /p inF="Drag and Drop input file into here: "
@@ -175,7 +175,27 @@ GOTO pgStart
     ECHO - Make sure you're using the most updated Nvidia drivers. The project currently uses NVEncC version %nvenccVer%. Make sure you're using Nvidia graphics driver %minNV% or later.
     ECHO.
     ECHO.
+    ECHO ---------------------------------------
+    ECHO Queue information
+    ECHO ---------------------------------------
+    ECHO You can queue items, in a .txt file to process them at a later stage, say, overnight.
+    ECHO in %cd:~0,-4%\extra\ you can create a 'queue.txt' file, and enter each video on a new line like so:
+    ECHO "E:\Videos\Video.mp4"
+    ECHO "E:\ToProcess\"
+    ECHO (You need the quotation marks)
     ECHO.
+    ECHO Then, the next time you run TcNo-Transcoder.bat, you'll be asked if you want to process them.
+    ECHO ---- BUT ----
+    ECHO The easier way to do this is:
+    ECHO Run %cd:~0,-4%\extra\context menu\Add-Send-To.bat
+    ECHO To have a "Add to TcNo Transcode Queue" option whenever you right-click a file or folder.
+    ECHO (When clicked, it will add them to the .txt file, adding them to the queue)
+    ECHO To remove it, just run "Remove-Send-To.bat"
+    ECHO.
+    ECHO.
+    ECHO ---------------------------------------
+    ECHO More info
+    ECHO ---------------------------------------
     ECHO For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki
 GOTO :eof
 
