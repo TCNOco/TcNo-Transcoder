@@ -406,9 +406,13 @@ GOTO :eof
     :multiStrReturn
     ECHO.
     ECHO PROCESSING:
+    :: Print the command that will be run
     ECHO %comStr%
     ECHO.
+    :: Run command and Transcode file
     %comStr%
+    :: Runs command if user has set one, after completion.
+    IF DEFINED afterCompletion ( %afterCompletion% )
     ECHO.
     ECHO COMPLETE
     ECHO.

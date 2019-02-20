@@ -192,3 +192,28 @@ set ovrr=
 :: If processing fails, you will have to remake the queue
 :: Default is blank
 set delOldQueue=
+
+
+:: Run command after completion.
+:: When a file finishes transcoding, the command will run.
+:: ----------------
+:: Variables
+:: ----------------
+:: %outF% is the output file that the program made. EG: D:\Videos\p_Proxy.mp4
+:: EG: ffmpeg -i "%outF%" "%outF%.mp3"
+:: Will be run as: ffmpeg -i "D:\Videos\p_Proxy.mp4" "D:\Videos\p_Proxy.mp4.mp3"
+:: For example.
+:: ----------------
+:: Keep in mind, the program is in either the x32 or x64 directory when this command is run.
+:: You can run multiple lines of code by creating another file (in the base directory -- not x32 or x64) and entering the following into afterCompletion:
+::
+:: CALL ../runafter.bat
+::
+:: This will open runafter.bat, one directory back from x32 or x64, the same place as TcNo-Transcoder.bat. 
+:: TcNo-Transcoder does the same with "CALL settings.bat" right at the top of the file :)
+:: ----------------
+::
+:: Default is blank. Don't put anything if you don't want that command to be run.
+::
+:: ----------------
+set afterCompletion=
