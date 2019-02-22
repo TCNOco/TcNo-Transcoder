@@ -412,11 +412,16 @@ GOTO :eof
     :: Run command and Transcode file
     %comStr%
     :: Runs command if user has set one, after completion.
-    IF DEFINED afterCompletion ( %afterCompletion% )
+    IF DEFINED afterCompletion ( GOTO afterComplete )
+    :afterCompleteReturn
     ECHO.
     ECHO COMPLETE
     ECHO.
 IF "%fld%"=="0" ( GOTO processFileReturn ) ELSE ( exit /b )
+
+:afterComplete
+%afterCompletion%
+GOTO afterCompleteReturn
 
 :multiCancel
     :: Ends file if the user does not wish to continue.
