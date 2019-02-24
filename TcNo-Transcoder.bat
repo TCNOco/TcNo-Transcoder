@@ -26,6 +26,8 @@ SET minNV=418.81
 :: Minimum Nvidia Graphics Driver version
 :: Download updates from: https://www.nvidia.com/Download/index.aspx
 SET processQueue=false
+:: Start time of encode. Leave BLANK
+SET startTime=
 
 :: Checking if 32 or 64 bit, if not set prior.
 IF NOT DEFINED bit ( GOTO getbit )
@@ -397,6 +399,10 @@ GOTO overrideReturn
 GOTO :eof
 
 :processFile
+    :: Sets and displays the encode start time
+    IF NOT DEFINED startTime ( GOTO defStart )
+    :defStartReturn
+
     :: Gets output file and directory
     IF DEFINED outFLD ( GOTO FolderGiven) ELSE ( GOTO NoFolderGiven)
     :multifgReturn
@@ -418,6 +424,11 @@ GOTO :eof
     ECHO COMPLETE
     ECHO.
 IF "%fld%"=="0" ( GOTO processFileReturn ) ELSE ( exit /b )
+
+:: Sets the start encode time, and displays it
+:defStart
+    SET startTime=%date% %time%
+GOTO defStartReturn
 
 :afterComplete
 %afterCompletion%
@@ -477,6 +488,10 @@ GOTO welcomeReturn
 
 :thanks
     ECHO Everything complete.
+    ECHO ---------------------
+    ECHO Start time: %startTime%
+    ECHO Finish time: %date% %time%
+    ECHO ---------------------
     ECHO Thanks for using TechNobo's Transcoder!
     ECHO ---------------------
     ECHO GitHub: https://github.com/TcNobo/TcNo-Transcoder
