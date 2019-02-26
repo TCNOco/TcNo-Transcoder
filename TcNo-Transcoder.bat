@@ -17,7 +17,7 @@ cd /d "%~dp0"
 :: Load variables
 CALL settings.bat
 :: Static variables. DO NOT EDIT
-SET batVer=1.5.1
+SET batVer=1.5.2
 SET nvenccVer=4.31
 :: NvencC 4.31 info:
 :: - Released: 12/02/2019
@@ -373,7 +373,7 @@ GOTO overrideReturn
             FOR %%i IN (%1\*.*) DO ( 
                 :: Runs only if it's a file and not a folder.
                 FOR %%f IN (%%i) DO IF NOT EXIST %%~sf\NUL ( 
-                        SET inF=%%i
+                        SET inF="%%i"
                         CALL :processFile 
                     )
             )
