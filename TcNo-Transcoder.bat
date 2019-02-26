@@ -1,5 +1,5 @@
 @ECHO OFF
-setlocal enableExtensions disableDelayedExpansion
+setlocal enableExtensions enableDelayedExpansion
 title TechNobo's Transcoder - NVEncC
 
 ::---------------------------------------------------------
@@ -17,7 +17,7 @@ cd /d "%~dp0"
 :: Load variables
 CALL settings.bat
 :: Static variables. DO NOT EDIT
-SET batVer=1.5.2
+SET batVer=1.5.3
 SET nvenccVer=4.31
 :: NvencC 4.31 info:
 :: - Released: 12/02/2019
@@ -28,6 +28,8 @@ SET minNV=418.81
 SET processQueue=false
 :: Start time of encode. Leave BLANK
 SET startTime=
+:: Last file it encoded
+SET lastFile=
 
 :: Checking if 32 or 64 bit, if not set prior.
 IF NOT DEFINED bit ( GOTO getbit )
@@ -361,8 +363,12 @@ GOTO overrideReturn
             FOR %%i IN (%1\*.*) DO (
                 :: Only runs if it's a file, and not a folder. Only works one folder deep, and doesn't check subfolders, for now. Functionality may be changed later.
                 FOR %%f IN (%%i) DO IF NOT EXIST %%~sf\NUL (
-                    ECHO -    %%i
-                    SET /A i+=1
+                    :: Makes sure there's no duplicates
+                    IF NOT "!lastFile!"=="%%i" (
+                        ECHO -    %%i
+                        SET /A i+=1
+                        SET lastFile=%%i
+                    ) 
                 )
             )
             ECHO ---------------------------
@@ -373,9 +379,13 @@ GOTO overrideReturn
             FOR %%i IN (%1\*.*) DO ( 
                 :: Runs only if it's a file and not a folder.
                 FOR %%f IN (%%i) DO IF NOT EXIST %%~sf\NUL ( 
+                    :: Makes sure there's no duplicates
+                    IF NOT "!lastFile!"=="%%i" (
                         SET inF="%%i"
                         CALL :processFile 
+                        SET lastFile=%%i
                     )
+                )
             )
             ECHO ---------------------------
             ECHO FOLDER %1 COMPLETE
