@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ErrFailedSettingsRead" xml:space="preserve">
+    <value>Failed to read settings file. Check everything is correct and try again.
+Error: {0}</value>
+    <comment>Displays when reading of settings.cfg fails.</comment>
+  </data>
+  <data name="ErrSettingNotFound" xml:space="preserve">
+    <value>ERROR: {0} was not found in the settings file, or there was another error involving it.
+Please verify the settings file and try again.</value>
+    <comment>Displays when a setting is not found during settings.cfg verification.</comment>
+  </data>
+  <data name="InfoAudio" xml:space="preserve">
+    <value>TechNobo's Video Transcoder
+------------------------------------------
+FIRST: Audio ENCODERS and then DECODERS.
+
+To see a list of videdo encoders, use -v
+
+------------------------------------------
+Listing available audio ENCODERS (output)
+------------------------------------------
+
+#
+
+------------------------------------------
+Listing available audio DECODERS (input)
+------------------------------------------
+
+
+#
+
+------------------------------------------</value>
+    <comment>Audio information. Displays when -a or --audio argument used.
+(Command is run where # is)</comment>
+  </data>
+  <data name="InfoDevices" xml:space="preserve">
+    <value>NOTE:
+When manually setting: use 0, 1, or any other integer, next to the GPU of your choice.
+ 
+The following GPU's are available for NVEncC transcoding:</value>
+    <comment>Device information. Displays when -d or --devices argument used.
+(Command is run where # is)</comment>
+  </data>
+  <data name="InfoHelp" xml:space="preserve">
+    <value>Hello.
+Welcome to TechNobo's Video Transcoder {0}
+built for generating Proxy files with multitrack audio quickly.
+
+---------------------------------------
+
+BASIC USAGE:
+Edit settings in settings.cfg.
+Either:
+    - Run this .exe without arguments and follow instructions on screen.
+    - Drag and drop a file/folder onto this .exe
+    - Right click a file/folder, "Add to TcNo Transcode Queue" and run this .exe (See 'Queue information' below)
+
+---------------------------------------
+
+INFORMATION OPTIONS:
+    -h, --help Displays this help information
+    -i, --info Displays program + author info
+    -d, --devices  Displays available GPUs
+    -a, --audioDisplays available input + output audio codecs/formats
+    -v, --videoDisplays available input + output video codecs/formats
+    -q, --queueInstantly start processing your current queue
+
+---------------------------------------
+
+TROUBLESHOOTING:
+    - Make sure you're using the most updated Nvidia drivers. The project currently uses NVEncC version {1}. Make sure you're using Nvidia graphics driver {2} or later.
+
+
+---------------------------------------
+Queue information
+---------------------------------------
+You can queue items, in a .txt file to process them at a later stage, say, overnight.
+in  {3}\extra\ you can create a 'queue.txt' file, and enter each video on a new line like so:
+"E:\Videos\Video.mp4"
+"E:\ToProcess\"
+(You need the quotation marks)
+
+Then, the next time you run TcNo-Transcoder.bat, you'll be asked if you want to process them.
+---- BUT ----
+The easier way to do this is:
+Run {3}\extra\context menu\Add-Send-To.bat
+To have a "Add to TcNo Transcode Queue" option whenever you right-click a file or folder.
+(When clicked, it will add them to the .txt file, adding them to the queue)
+To remove it, just run "Remove-Send-To.bat"
+
+
+---------------------------------------
+More info
+---------------------------------------
+For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki</value>
+    <comment>Help information. Displays when -h or --help argument used.</comment>
+  </data>
+  <data name="InfoVideo" xml:space="preserve">
+    <value>TechNobo's Video Transcoder
+------------------------------------------
+
+{0} --check - formats
+
+------------------------------------------
+Remember to scroll to the top.
+ABOVE: Video Muxers and Demuxers.
+
+    || D - : Demuxer(input) ONLY.
+    || -M : Muxer(output) ONLY
+    || DM : Demuxer and Muxer, both input and output available.
+
+To see a list of audio encoders, use -a
+------------------------------------------</value>
+    <comment>Video information. Displays when -v or --video argument used.</comment>
+  </data>
+  <data name="PrgAnyKeyToClose" xml:space="preserve">
+    <value>PRESS ANY KEY TO CLOSE...</value>
+  </data>
+</root>

@@ -6,42 +6,42 @@
 :: C#.net 4.6
 
 
-@ECHO OFF
+:: @ECHO OFF
 setlocal enableExtensions enableDelayedExpansion
-:: title TechNobo's Transcoder - NVEncC
+:: :: title TechNobo's Transcoder - NVEncC
 
-::---------------------------------------------------------
-:: TcNo-Transcoder
-:: Created by TechNobo: https://tcno.co/
-:: GitHub Repo: https://github.com/TcNobo/TcNo-Transcoder
-::---------------------------------------------------------
+:: ::---------------------------------------------------------
+:: :: TcNo-Transcoder
+:: :: Created by TechNobo: https://tcno.co/
+:: :: GitHub Repo: https://github.com/TcNobo/TcNo-Transcoder
+:: ::---------------------------------------------------------
 
 :pgStart
-::---------------------------------------
-:: ------------ VARIABLE DEF ------------
-::---------------------------------------
-:: CD to .bat location
-cd /d "%~dp0"
+:: ::---------------------------------------
+:: :: ------------ VARIABLE DEF ------------
+:: ::---------------------------------------
+:: :: CD to .bat location
+:: cd /d "%~dp0"
 :: Load variables
 CALL settings.bat
-:: Static variables. DO NOT EDIT
-SET batVer=1.5.3
-SET nvenccVer=4.31
-:: NvencC 4.31 info:
-:: - Released: 12/02/2019
-:: - GitHub: https://github.com/rigaya/NVEnc/releases
-SET minNV=418.81
-:: Minimum Nvidia Graphics Driver version
-:: Download updates from: https://www.nvidia.com/Download/index.aspx
+:: :: Static variables. DO NOT EDIT
+:: SET batVer=1.5.3
+:: SET nvenccVer=4.31
+:: :: NvencC 4.31 info:
+:: :: - Released: 12/02/2019
+:: :: - GitHub: https://github.com/rigaya/NVEnc/releases
+:: SET minNV=418.81
+:: :: Minimum Nvidia Graphics Driver version
+:: :: Download updates from: https://www.nvidia.com/Download/index.aspx
 SET processQueue=false
-:: Start time of encode. Leave BLANK
-SET startTime=
-:: Last file it encoded
-SET lastFile=
+:: :: Start time of encode. Leave BLANK
+:: SET startTime=
+:: :: Last file it encoded
+:: SET lastFile=
 
-:: Checking if 32 or 64 bit, if not set prior.
-IF NOT DEFINED bit ( GOTO getbit )
-:getbitReturn
+:: :: Checking if 32 or 64 bit, if not set prior.
+:: IF NOT DEFINED bit ( GOTO getbit )
+:: :getbitReturn
 
 :: Setting executable to the correct version
 IF "%bit%"=="32" (set nvexe=NVEncC.exe) ELSE (set nvexe=NVEncC64.exe)
@@ -49,22 +49,23 @@ CD x%bit%
 ::---------------------------------------
 
 
-::---------------------------------------
-:: ------------- ARGUMENTS -------------
-::---------------------------------------
-:: Checks for arguments, like -h or --help
-IF "%~1"=="-h" ( GOTO help )
-IF "%~1"=="--help" ( GOTO help )
-IF "%~1"=="-i" ( GOTO info )
-IF "%~1"=="--info" ( GOTO info )
-IF "%~1"=="-d" ( GOTO devices )
-IF "%~1"=="--devices" ( GOTO devices )
-IF "%~1"=="-a" ( GOTO audio )
-IF "%~1"=="--audio" ( GOTO audio )
-IF "%~1"=="-v" ( GOTO video )
-IF "%~1"=="--video" ( GOTO video )
-IF "%~1"=="-q" ( GOTO startQueueProcessing )
-IF "%~1"=="--queue" ( GOTO startQueueProcessing )
+:: ::---------------------------------------
+:: :: ------------- ARGUMENTS -------------
+:: ::---------------------------------------
+:: :: Checks for arguments, like -h or --help
+:: IF "%~1"=="-h" ( GOTO help )
+:: IF "%~1"=="--help" ( GOTO help )
+:: IF "%~1"=="-i" ( GOTO info )
+:: IF "%~1"=="--info" ( GOTO info )
+:: IF "%~1"=="-d" ( GOTO devices )
+:: IF "%~1"=="--devices" ( GOTO devices )
+:: IF "%~1"=="-a" ( GOTO audio )
+:: IF "%~1"=="--audio" ( GOTO audio )
+:: IF "%~1"=="-v" ( GOTO video )
+:: IF "%~1"=="--video" ( GOTO video )
+:: IF "%~1"=="-q" ( GOTO startQueueProcessing )
+:: IF "%~1"=="--queue" ( GOTO startQueueProcessing )
+
 :: Show welcome screen
 GOTO welcome
 :welcomeReturn
@@ -161,56 +162,56 @@ GOTO pgStart
 ::---------------------------------------
 :: ------------ HELP + INFO ------------
 ::---------------------------------------
-:help
-    CLS
-    ECHO Hello.
-    ECHO Welcome to TechNobo's Video Transcoder %batVer%
-    ECHO built for generating Proxy files with multitrack audio quickly.
-    ECHO.
-    ECHO ---------------------------------------
-    ECHO.
-    ECHO BASIC USAGE:
-    ECHO Edit run.bat with a text editor to manually set variables at the top.
-    ECHO.
-    ECHO ---------------------------------------
-    ECHO.
-    ECHO INFORMATION OPTIONS:
-    ECHO -h, --help             Displays this help INFORMATION
-    ECHO -i, --info             Displays program + author info
-    ECHO -d, --devices          Displays available GPUs
-    ECHO -a, --audio            Displays available input + output audio codecs/formats
-    ECHO -v, --video            Displays available input + output video codecs/formats
-    ECHO -q, --queue            Instantly start processing your current queue
-    ECHO.
-    ECHO ---------------------------------------
-    ECHO.
-    ECHO TROUBLESHOOTING:
-    ECHO - Make sure you're using the most updated Nvidia drivers. The project currently uses NVEncC version %nvenccVer%. Make sure you're using Nvidia graphics driver %minNV% or later.
-    ECHO.
-    ECHO.
-    ECHO ---------------------------------------
-    ECHO Queue information
-    ECHO ---------------------------------------
-    ECHO You can queue items, in a .txt file to process them at a later stage, say, overnight.
-    ECHO in %cd:~0,-4%\extra\ you can create a 'queue.txt' file, and enter each video on a new line like so:
-    ECHO "E:\Videos\Video.mp4"
-    ECHO "E:\ToProcess\"
-    ECHO (You need the quotation marks)
-    ECHO.
-    ECHO Then, the next time you run TcNo-Transcoder.bat, you'll be asked if you want to process them.
-    ECHO ---- BUT ----
-    ECHO The easier way to do this is:
-    ECHO Run %cd:~0,-4%\extra\context menu\Add-Send-To.bat
-    ECHO To have a "Add to TcNo Transcode Queue" option whenever you right-click a file or folder.
-    ECHO (When clicked, it will add them to the .txt file, adding them to the queue)
-    ECHO To remove it, just run "Remove-Send-To.bat"
-    ECHO.
-    ECHO.
-    ECHO ---------------------------------------
-    ECHO More info
-    ECHO ---------------------------------------
-    ECHO For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki
-GOTO :eof
+:: :help
+::     CLS
+::     ECHO Hello.
+::     ECHO Welcome to TechNobo's Video Transcoder %batVer%
+::     ECHO built for generating Proxy files with multitrack audio quickly.
+::     ECHO.
+::     ECHO ---------------------------------------
+::     ECHO.
+::     ECHO BASIC USAGE:
+::     ECHO Edit run.bat with a text editor to manually set variables at the top.
+::     ECHO.
+::     ECHO ---------------------------------------
+::     ECHO.
+::     ECHO INFORMATION OPTIONS:
+::     ECHO -h, --help             Displays this help INFORMATION
+::     ECHO -i, --info             Displays program + author info
+::     ECHO -d, --devices          Displays available GPUs
+::     ECHO -a, --audio            Displays available input + output audio codecs/formats
+::     ECHO -v, --video            Displays available input + output video codecs/formats
+::     ECHO -q, --queue            Instantly start processing your current queue
+::     ECHO.
+::     ECHO ---------------------------------------
+::     ECHO.
+::     ECHO TROUBLESHOOTING:
+::     ECHO - Make sure you're using the most updated Nvidia drivers. The project currently uses NVEncC version %nvenccVer%. Make sure you're using Nvidia graphics driver %minNV% or later.
+::     ECHO.
+::     ECHO.
+::     ECHO ---------------------------------------
+::     ECHO Queue information
+::     ECHO ---------------------------------------
+::     ECHO You can queue items, in a .txt file to process them at a later stage, say, overnight.
+::     ECHO in %cd:~0,-4%\extra\ you can create a 'queue.txt' file, and enter each video on a new line like so:
+::     ECHO "E:\Videos\Video.mp4"
+::     ECHO "E:\ToProcess\"
+::     ECHO (You need the quotation marks)
+::     ECHO.
+::     ECHO Then, the next time you run TcNo-Transcoder.bat, you'll be asked if you want to process them.
+::     ECHO ---- BUT ----
+::     ECHO The easier way to do this is:
+::     ECHO Run %cd:~0,-4%\extra\context menu\Add-Send-To.bat
+::     ECHO To have a "Add to TcNo Transcode Queue" option whenever you right-click a file or folder.
+::     ECHO (When clicked, it will add them to the .txt file, adding them to the queue)
+::     ECHO To remove it, just run "Remove-Send-To.bat"
+::     ECHO.
+::     ECHO.
+::     ECHO ---------------------------------------
+::     ECHO More info
+::     ECHO ---------------------------------------
+::     ECHO For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki
+:: GOTO :eof
 
 :info
     CLS
@@ -244,51 +245,51 @@ GOTO :eof
     %nvexe% --check-device
 GOTO :eof
 
-:audio
-    CLS
-    ECHO.
-    ECHO TechNobo's Video Transcoder
-    ECHO ------------------------------------------
-    ECHO Listing available audio ENCODERS (output)
-    ECHO ------------------------------------------
-    ECHO.
-    %nvexe% --check-encoders
-    ECHO.
-    ECHO ------------------------------------------
-    ECHO Listing available audio DECODERS (input)
-    ECHO ------------------------------------------
-    ECHO.
-    ECHO.
-    %nvexe% --check-decoders
-    ECHO.
-    ECHO ------------------------------------------
-    ECHO Remember to scroll to the top.
-    ECHO ABOVE: Audio ENCODERS and then DECODERS.
-    ECHO.
-    ECHO To see a list of videdo encoders, use -v
-    ECHO ------------------------------------------
-GOTO :eof
+:: :audio
+::     CLS
+::     ECHO.
+::     ECHO TechNobo's Video Transcoder
+::     ECHO ------------------------------------------
+::     ECHO Listing available audio ENCODERS (output)
+::     ECHO ------------------------------------------
+::     ECHO.
+::     %nvexe% --check-encoders
+::     ECHO.
+::     ECHO ------------------------------------------
+::     ECHO Listing available audio DECODERS (input)
+::     ECHO ------------------------------------------
+::     ECHO.
+::     ECHO.
+::     %nvexe% --check-decoders
+::     ECHO.
+::     ECHO ------------------------------------------
+::     ECHO Remember to scroll to the top.
+::     ECHO ABOVE: Audio ENCODERS and then DECODERS.
+::     ECHO.
+::     ECHO To see a list of videdo encoders, use -v
+::     ECHO ------------------------------------------
+:: GOTO :eof
 
-:video
-    CLS
-    ECHO.
-    ECHO TechNobo's Video Transcoder
-    ECHO ------------------------------------------
-    ECHO.
-    %nvexe% --check-formats
-    ECHO.
-    ECHO ------------------------------------------
-    ECHO Remember to scroll to the top.
-    ECHO ABOVE: Video Muxers and Demuxers.
-    ECHO.
-    ECHO  ^|^|  D- : Demuxer (input) ONLY.
-    ECHO  ^|^|  -M : Muxer (output) ONLY.
-    ECHO  ^|^|  DM : Demuxer and Muxer, both input and output available.
-    ECHO.
-    ECHO To see a list of audio encoders, use -a
-    ECHO ------------------------------------------
-GOTO :eof
-::---------------------------------------
+:: :video
+::     CLS
+::     ECHO.
+::     ECHO TechNobo's Video Transcoder
+::     ECHO ------------------------------------------
+::     ECHO.
+::     %nvexe% --check-formats
+::     ECHO.
+::     ECHO ------------------------------------------
+::     ECHO Remember to scroll to the top.
+::     ECHO ABOVE: Video Muxers and Demuxers.
+::     ECHO.
+::     ECHO  ^|^|  D- : Demuxer (input) ONLY.
+::     ECHO  ^|^|  -M : Muxer (output) ONLY.
+::     ECHO  ^|^|  DM : Demuxer and Muxer, both input and output available.
+::     ECHO.
+::     ECHO To see a list of audio encoders, use -a
+::     ECHO ------------------------------------------
+:: GOTO :eof
+:: ::---------------------------------------
 
 
 ::---------------------------------------

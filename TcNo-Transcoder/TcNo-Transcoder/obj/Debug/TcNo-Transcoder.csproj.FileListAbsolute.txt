@@ -1,9 +1,0 @@
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\bin\Debug\TcNo-Transcoder.exe.config
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\bin\Debug\TcNo-Transcoder.exe
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\bin\Debug\TcNo-Transcoder.pdb
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csprojAssemblyReference.cache
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csproj.CoreCompileInputs.cache
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.exe
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.pdb
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csproj.GenerateResource.cache
-E:\Projects\TcNo-Transcoder\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo_Transcoder.GlobalStr.resources
