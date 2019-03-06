@@ -109,6 +109,24 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Everything complete.
+        ///---------------------
+        ///Start time: {0}
+        ///Finish time: {1}
+        ///---------------------
+        ///Thanks for using TechNobo&apos;s Transcoder!
+        ///---------------------
+        ///GitHub: https://github.com/TcNobo/TcNo-Transcoder
+        ///YouTube: https://YouTube.com/TechNobo
+        ///Web: https://tcno.co/.
+        /// </summary>
+        internal static string InfoComplete {
+            get {
+                return ResourceManager.GetString("InfoComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NOTE:
         ///When manually setting: use 0, 1, or any other integer, next to the GPU of your choice.
         /// 
@@ -168,11 +186,54 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Welcome to TechNobo&apos;s Video Transcoder {0}
+        ///------------------------
+        ///Run with -h or --help to display help.
+        ///Run with -i or --info to display info.
+        ///------------------------.
+        /// </summary>
+        internal static string InfoWelcome {
+            get {
+                return ResourceManager.GetString("InfoWelcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PRESS ANY KEY TO CLOSE....
         /// </summary>
         internal static string PrgAnyKeyToClose {
             get {
                 return ResourceManager.GetString("PrgAnyKeyToClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you wish to continue?.
+        /// </summary>
+        internal static string PrgContinue {
+            get {
+                return ResourceManager.GetString("PrgContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ATTENTION!
+        ///Dragging files in will process them INSTANTLY using the settings in settings.bat!
+        ///
+        ///The following files will be processed:.
+        /// </summary>
+        internal static string PrgDragDropNotice {
+            get {
+                return ResourceManager.GetString("PrgDragDropNotice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queue processing cancelled..
+        /// </summary>
+        internal static string PrgProcessingCancelled {
+            get {
+                return ResourceManager.GetString("PrgProcessingCancelled", resourceCulture);
             }
         }
     }

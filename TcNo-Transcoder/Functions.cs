@@ -133,5 +133,27 @@ namespace TcNo_Transcoder
             }
             Global.NvexeFull = String.Format(@"{0}\x{1}\{2}", Global.ExeLocation, Global.Bit.ToString(), Global.Nvexe);
         }
+
+        public static void ProcessFile(string inputFile)
+        {
+            string Arg = "-i \"" + inputFile + "\"";
+            Arg += " --" + Global.Settings["DecodeMode"];
+            Arg += " --codec " + Global.Settings["VideoCodec"];
+            Arg += " --fps " + Global.Settings["FPS"];
+            Arg += " --output-res " + Global.Settings["Resolution"];
+            Arg += " --profile " + Global.Settings["EncoderProfile"];
+            Arg += " --level " + Global.Settings["Level"];
+            Arg += " -- " + Global.Settings["Bitrate"];
+            Arg += " --preset " + Global.Settings["Preset"];
+            Arg += " --lookahead " + Global.Settings["Lookahead"];
+            Arg += " --cuda-schedule " + Global.Settings["CUDASchedule"];
+            Arg += " --gop-len " + Global.Settings["GOPLength"];
+            Arg += " --bframes " + Global.Settings["BFrames"];
+            Arg += " --ref " + Global.Settings["ReferenceFrames"];
+            Arg += " --mv-precision " + Global.Settings["MVPrecision"];
+            Arg += " --colormatrix " + Global.Settings["Colormatrix"];
+            Arg += " --output " + Global.Settings["Colormatrix"];
+            Console.WriteLine(Arg);
+        }
     }
 }

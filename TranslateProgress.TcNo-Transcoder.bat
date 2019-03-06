@@ -213,37 +213,37 @@ GOTO pgStart
 ::     ECHO For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki
 :: GOTO :eof
 
-:info
-    CLS
-    ECHO Hello.
-    ECHO Welcome to TechNobo's Video Transcoder %batVer%
-    ECHO built for generating Proxy files with multitrack audio quickly.
-    ECHO.
-    ECHO ---------------------------------------
-    ECHO.
-    ECHO This project is Open-Source, licensed under GPL-3.0
-    ECHO You can see what's going on under the hood, or contribute here:
-    ECHO GitHub: https://GitHub.com/TcNobo/TcNo-Transcoder
-    ECHO.
-    ECHO -------------------------------
-    ECHO Created with love from TechNobo
-    ECHO -------------------------------
-    ECHO Instagram: https://www.instagram.com/TcNobo/
-    ECHO Twitter: https://twitter.com/TcNobo
-    ECHO YouTube: https://YouTube.com/TechNobo
-    ECHO Web: https://tcno.co/
-    ECHO.
-    ECHO.
-    ECHO Happy transcoding :)
-GOTO :eof
+:: :info
+::     CLS
+::     ECHO Hello.
+::     ECHO Welcome to TechNobo's Video Transcoder %batVer%
+::     ECHO built for generating Proxy files with multitrack audio quickly.
+::     ECHO.
+::     ECHO ---------------------------------------
+::     ECHO.
+::     ECHO This project is Open-Source, licensed under GPL-3.0
+::     ECHO You can see what's going on under the hood, or contribute here:
+::     ECHO GitHub: https://GitHub.com/TcNobo/TcNo-Transcoder
+::     ECHO.
+::     ECHO -------------------------------
+::     ECHO Created with love from TechNobo
+::     ECHO -------------------------------
+::     ECHO Instagram: https://www.instagram.com/TcNobo/
+::     ECHO Twitter: https://twitter.com/TcNobo
+::     ECHO YouTube: https://YouTube.com/TechNobo
+::     ECHO Web: https://tcno.co/
+::     ECHO.
+::     ECHO.
+::     ECHO Happy transcoding :)
+:: GOTO :eof
 
-:devices
-    CLS
-    ECHO NOTE:
-    ECHO When manually setting: use 0, 1, or any other integer, next to the GPU of your choice 
-    ECHO The following GPU's are available for NVEncC transcoding:
-    %nvexe% --check-device
-GOTO :eof
+:: :devices
+::     CLS
+::     ECHO NOTE:
+::     ECHO When manually setting: use 0, 1, or any other integer, next to the GPU of your choice 
+::     ECHO The following GPU's are available for NVEncC transcoding:
+::     %nvexe% --check-device
+:: GOTO :eof
 
 :: :audio
 ::     CLS

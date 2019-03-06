@@ -151,6 +151,19 @@ Listing available audio DECODERS (input)
     <comment>Audio information. Displays when -a or --audio argument used.
 (Command is run where # is)</comment>
   </data>
+  <data name="InfoComplete" xml:space="preserve">
+    <value>Everything complete.
+---------------------
+Start time: {0}
+Finish time: {1}
+---------------------
+Thanks for using TechNobo's Transcoder!
+---------------------
+GitHub: https://github.com/TcNobo/TcNo-Transcoder
+YouTube: https://YouTube.com/TechNobo
+Web: https://tcno.co/</value>
+    <comment>Displays when task processing finished</comment>
+  </data>
   <data name="InfoDevices" xml:space="preserve">
     <value>NOTE:
 When manually setting: use 0, 1, or any other integer, next to the GPU of your choice.
@@ -231,7 +244,29 @@ To see a list of audio encoders, use -a
 ------------------------------------------</value>
     <comment>Video information. Displays when -v or --video argument used.</comment>
   </data>
+  <data name="InfoWelcome" xml:space="preserve">
+    <value>Welcome to TechNobo's Video Transcoder {0}
+------------------------
+Run with -h or --help to display help.
+Run with -i or --info to display info.
+------------------------</value>
+    <comment>Displays when the program starts</comment>
+  </data>
   <data name="PrgAnyKeyToClose" xml:space="preserve">
     <value>PRESS ANY KEY TO CLOSE...</value>
+  </data>
+  <data name="PrgContinue" xml:space="preserve">
+    <value>Are you sure you wish to continue?</value>
+  </data>
+  <data name="PrgDragDropNotice" xml:space="preserve">
+    <value>ATTENTION!
+Dragging files in will process them INSTANTLY using the settings in settings.bat!
+
+The following files will be processed:</value>
+    <comment>Shows when files dragged onto program, before processing.</comment>
+  </data>
+  <data name="PrgProcessingCancelled" xml:space="preserve">
+    <value>Queue processing cancelled.</value>
+    <comment>Displays when transcode cancelled</comment>
   </data>
 </root>

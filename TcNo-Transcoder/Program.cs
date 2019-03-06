@@ -37,10 +37,16 @@ namespace TcNo_Transcoder
 
 
 
-            
+            //TEST
+            Functions.ProcessFile("f");
+            Console.Read();
 
-            foreach (string s in args)
-                switch (s)
+            //
+
+
+            if (args.Length != 0)
+            {
+                switch (args[0])
                 {
                     case "-h":
                     case "--help":
@@ -65,11 +71,47 @@ namespace TcNo_Transcoder
                         break;
                     case "-q":
                     case "--queue":
-                        Console.WriteLine("QUEUE");
+                        Console.WriteLine("TO DO");
                         break;
 
                 }
-            Console.WriteLine("Launched without arguments");
+
+                // If there were files dragged onto the program
+                Console.WriteLine(GlobalStrings.PrgDragDropNotice);
+                foreach (var i in args)
+                {
+                    Console.WriteLine(i);
+                }
+                Console.WriteLine();
+                
+
+
+                if (System.IO.File.Exists("skipcheck"))
+                {
+                    Console.WriteLine("Check skipped");
+                }
+                else
+                {
+                    while (true)
+                    {
+                        Console.Write(GlobalStrings.PrgContinue + " (Y/N): ");
+                        string response = Console.ReadLine();
+                        if (response.ToLower() == "y")
+                        {
+                            Console.WriteLine("Yes");
+                            break;
+                        }
+                        else if (response.ToLower() == "n")
+                        {
+                            Console.WriteLine(GlobalStrings.PrgProcessingCancelled);
+                            Functions.AnyKeyToClose();
+                        }
+                    }
+                }
+            } else
+            {
+                Console.WriteLine("Launched without arguments");
+            }
             Console.Read();
         }
 
