@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -37,11 +38,12 @@ namespace TcNo_Transcoder
 
 
 
-            //TEST
+            /* //TEST
             Functions.ProcessFile("f");
             Console.Read();
 
-            //
+            // */
+
 
 
             if (args.Length != 0)
@@ -83,7 +85,7 @@ namespace TcNo_Transcoder
                     Console.WriteLine(i);
                 }
                 Console.WriteLine();
-                
+
 
 
                 if (System.IO.File.Exists("skipcheck"))
@@ -110,7 +112,31 @@ namespace TcNo_Transcoder
                 }
             } else
             {
-                Console.WriteLine("Launched without arguments");
+                // Program launched without arguments
+                Console.WriteLine(GlobalStrings.InfoWelcome);
+                Console.Write("\n" + GlobalStrings.PrgDragDropPrompt + " ");
+                string usrInput = Console.ReadLine().Replace("\"", "");
+                string outputFolder = Global.Settings["OutputDirectory"];
+
+                if (Functions.SettingNull(Global.Settings["OutputDirectory"]))
+                {
+                    outputFolder = Path.GetDirectoryName(usrInput);
+                }
+                Console.WriteLine("\n" + String.Format(GlobalStrings.PrgChangeDir, "NVEncC x" + Global.Bit.ToString(), outputFolder));
+                Console.Read();
+
+                Console.WriteLine(String.Format(GlobalStrings.PrgVerifyRenderSettings, usrInput, Global.Settings["Resolution"], Global.Settings["FPS"], Global.Settings["VideoCodec"]));
+                Console.WriteLine("\n" + Global.Nvexe + " " + Functions.GetTaskArgs(usrInput, outputFolder));
+                Console.WriteLine("\n" + GlobalStrings.PrgCorrect);
+                if (Console.ReadLine().ToLower() == "y")
+                {
+                    // Process
+                } else
+                {
+                    Console.WriteLine(GlobalStrings.ErrStopped + "\n");
+                    Console.WriteLine(GlobalStrings.InfoCompleteNoTime);
+                }
+                Console.Read();
             }
             Console.Read();
         }

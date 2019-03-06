@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -134,7 +135,7 @@ namespace TcNo_Transcoder
             Global.NvexeFull = String.Format(@"{0}\x{1}\{2}", Global.ExeLocation, Global.Bit.ToString(), Global.Nvexe);
         }
 
-        public static void ProcessFile(string inputFile)
+        public static string GetTaskArgs(string inputFile, string outputFolder)
         {
             string Arg = "-i \"" + inputFile + "\"";
             Arg += " --" + Global.Settings["DecodeMode"];
@@ -143,7 +144,7 @@ namespace TcNo_Transcoder
             Arg += " --output-res " + Global.Settings["Resolution"];
             Arg += " --profile " + Global.Settings["EncoderProfile"];
             Arg += " --level " + Global.Settings["Level"];
-            Arg += " -- " + Global.Settings["Bitrate"];
+            Arg += " --" + Global.Settings["Bitrate"];
             Arg += " --preset " + Global.Settings["Preset"];
             Arg += " --lookahead " + Global.Settings["Lookahead"];
             Arg += " --cuda-schedule " + Global.Settings["CUDASchedule"];
@@ -152,8 +153,34 @@ namespace TcNo_Transcoder
             Arg += " --ref " + Global.Settings["ReferenceFrames"];
             Arg += " --mv-precision " + Global.Settings["MVPrecision"];
             Arg += " --colormatrix " + Global.Settings["Colormatrix"];
-            Arg += " --output " + Global.Settings["Colormatrix"];
-            Console.WriteLine(Arg);
+            if (Global.Settings["CopyAudio"] == "1")
+            {
+                Arg += " --audio-copy";
+            } else
+            {
+                Arg += " --audio-codec" + Global.Settings["AudioCodec"];
+            }
+            if (!SettingNull(Global.Settings["SampleAspectRatio"]))
+            {
+                Arg += " --sar " + Global.Settings["SampleAspectRatio"];
+            }
+            if (Global.Settings["CABAC"] == "1")
+            {
+                Arg += " --cabac";
+            }
+            if (Global.Settings["Deblock"] == "1")
+            {
+                Arg += " --deblock";
+            }
+
+
+            Arg += " --output \"" + outputFolder + "\\" + Path.GetFileNameWithoutExtension(inputFile) + Global.Settings["Suffix"] + "." + Global.Settings["OutputFormat"] + "\"";
+            return Arg;
+        }
+
+        public static bool SettingNull(string inString)
+        {
+            return inString == " " || inString == "" || inString == string.Empty;
         }
     }
 }

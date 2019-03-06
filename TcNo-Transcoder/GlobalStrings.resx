@@ -127,6 +127,9 @@ Error: {0}</value>
 Please verify the settings file and try again.</value>
     <comment>Displays when a setting is not found during settings.cfg verification.</comment>
   </data>
+  <data name="ErrStopped" xml:space="preserve">
+    <value>Stopped.</value>
+  </data>
   <data name="InfoAudio" xml:space="preserve">
     <value>TechNobo's Video Transcoder
 ------------------------------------------
@@ -163,6 +166,15 @@ GitHub: https://github.com/TcNobo/TcNo-Transcoder
 YouTube: https://YouTube.com/TechNobo
 Web: https://tcno.co/</value>
     <comment>Displays when task processing finished</comment>
+  </data>
+  <data name="InfoCompleteNoTime" xml:space="preserve">
+    <value>Everything complete.
+---------------------
+Thanks for using TechNobo's Transcoder!
+---------------------
+GitHub: https://github.com/TcNobo/TcNo-Transcoder
+YouTube: https://YouTube.com/TechNobo
+Web: https://tcno.co/</value>
   </data>
   <data name="InfoDevices" xml:space="preserve">
     <value>NOTE:
@@ -255,8 +267,17 @@ Run with -i or --info to display info.
   <data name="PrgAnyKeyToClose" xml:space="preserve">
     <value>PRESS ANY KEY TO CLOSE...</value>
   </data>
+  <data name="PrgChangeDir" xml:space="preserve">
+    <value>Using {0}
+The file will save to: {1}
+If you want it saved to a new directory, exit, and set it in settings.bat.
+Press any key to continue...</value>
+  </data>
   <data name="PrgContinue" xml:space="preserve">
     <value>Are you sure you wish to continue?</value>
+  </data>
+  <data name="PrgCorrect" xml:space="preserve">
+    <value>Is this correct? (y/n):</value>
   </data>
   <data name="PrgDragDropNotice" xml:space="preserve">
     <value>ATTENTION!
@@ -265,8 +286,19 @@ Dragging files in will process them INSTANTLY using the settings in settings.bat
 The following files will be processed:</value>
     <comment>Shows when files dragged onto program, before processing.</comment>
   </data>
+  <data name="PrgDragDropPrompt" xml:space="preserve">
+    <value>Drag and Drop input file into here:</value>
+  </data>
   <data name="PrgProcessingCancelled" xml:space="preserve">
     <value>Queue processing cancelled.</value>
     <comment>Displays when transcode cancelled</comment>
+  </data>
+  <data name="PrgVerifyRenderSettings" xml:space="preserve">
+    <value>{0} will render with the current settings:
+Resolution: {1}
+FPS: {2}
+Codec: {3}
+
+This command will be run:</value>
   </data>
 </root>

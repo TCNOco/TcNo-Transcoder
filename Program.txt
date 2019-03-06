@@ -1,0 +1,31 @@
+Ways of starting the program:
+- Opening the .bat. Dragging and dropping a file into it. Confirming. Processing. Thanks. Closing.
+- Opening the .bat. Finding out there's a queue. Processing it after confirming. Thanks. Closing.
+- Dragging a file onto the .bat. Confirming. Processing. Thanks. Closing.
+
+- Replacing the file with a file or folder in the above operations.
+
+- Starting the program with -h, -i, -d, -a, -v, -q
+
+
+Order of operations:
+- Start
+- Set window title
+- Get .bat location
+- Load settings
+- Check if 32 or 64 bit.
+- Set the correct NVEncC.exe version, based on bit.
+- Check if arguments include a command. (-h, -v, -a, etc) -- If so, run and close.
+- Display welcome screen
+- If a file was dragged onto the program. Confirms, then processes.
+- If a queue is present, it will be processed. If told to NOT rename it, the program won't rename to include date, so it won't process again.
+	-- Instead, start processing, and for each line that is completed, add it to a completed file, and keep the rest that need to be done there, incase of a crash. ONLY move and remove after processing a file successfully.
+If program started normally (no args), it will be here:
+(D) - Prompts user to drag and drop a file onto the program.
+- Sets the output folder to file's folder, unless output folder specified in settings.
+- Tells user what it will use to process
+- Tells user output folder, and to change in settings if they want it differently.
+- Tells them what the file will be processed with (settings). Res, fps, and codec. Then displays the command it will run.
+- Asks user if they want to continue.
+- Processes file with settings user defined.
+- Thanks, and goes back to the start of the program.

@@ -81,6 +81,15 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stopped..
+        /// </summary>
+        internal static string ErrStopped {
+            get {
+                return ResourceManager.GetString("ErrStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TechNobo&apos;s Video Transcoder
         ///------------------------------------------
         ///FIRST: Audio ENCODERS and then DECODERS.
@@ -123,6 +132,21 @@ namespace TcNo_Transcoder {
         internal static string InfoComplete {
             get {
                 return ResourceManager.GetString("InfoComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything complete.
+        ///---------------------
+        ///Thanks for using TechNobo&apos;s Transcoder!
+        ///---------------------
+        ///GitHub: https://github.com/TcNobo/TcNo-Transcoder
+        ///YouTube: https://YouTube.com/TechNobo
+        ///Web: https://tcno.co/.
+        /// </summary>
+        internal static string InfoCompleteNoTime {
+            get {
+                return ResourceManager.GetString("InfoCompleteNoTime", resourceCulture);
             }
         }
         
@@ -208,11 +232,32 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Using {0}
+        ///The file will save to: {1}
+        ///If you want it saved to a new directory, exit, and set it in settings.bat.
+        ///Press any key to continue....
+        /// </summary>
+        internal static string PrgChangeDir {
+            get {
+                return ResourceManager.GetString("PrgChangeDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you wish to continue?.
         /// </summary>
         internal static string PrgContinue {
             get {
                 return ResourceManager.GetString("PrgContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is this correct? (y/n):.
+        /// </summary>
+        internal static string PrgCorrect {
+            get {
+                return ResourceManager.GetString("PrgCorrect", resourceCulture);
             }
         }
         
@@ -229,11 +274,34 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag and Drop input file into here:.
+        /// </summary>
+        internal static string PrgDragDropPrompt {
+            get {
+                return ResourceManager.GetString("PrgDragDropPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Queue processing cancelled..
         /// </summary>
         internal static string PrgProcessingCancelled {
             get {
                 return ResourceManager.GetString("PrgProcessingCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} will render with the current settings:
+        ///Resolution: {1}
+        ///FPS: {2}
+        ///Codec: {3}
+        ///
+        ///This command will be run:.
+        /// </summary>
+        internal static string PrgVerifyRenderSettings {
+            get {
+                return ResourceManager.GetString("PrgVerifyRenderSettings", resourceCulture);
             }
         }
     }

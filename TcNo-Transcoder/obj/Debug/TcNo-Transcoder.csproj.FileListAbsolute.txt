@@ -16,3 +16,12 @@ E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csproj.Cor
 E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.exe
 E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.pdb
 E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo_Transcoder.GlobalStrings.resources
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\bin\Debug\TcNo-Transcoder.exe.config
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\bin\Debug\TcNo-Transcoder.exe
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\bin\Debug\TcNo-Transcoder.pdb
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csprojAssemblyReference.cache
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo_Transcoder.GlobalStrings.resources
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csproj.GenerateResource.cache
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.csproj.CoreCompileInputs.cache
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.exe
+C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Debug\TcNo-Transcoder.pdb
