@@ -271,7 +271,7 @@ Run with -i or --info to display info.
     <value>Using {0}
 The file will save to: {1}
 If you want it saved to a new directory, exit, and set it in settings.bat.
-Press any key to continue...</value>
+Press enter to continue...</value>
   </data>
   <data name="PrgContinue" xml:space="preserve">
     <value>Are you sure you wish to continue?</value>
@@ -287,11 +287,21 @@ The following files will be processed:</value>
     <comment>Shows when files dragged onto program, before processing.</comment>
   </data>
   <data name="PrgDragDropPrompt" xml:space="preserve">
-    <value>Drag and Drop input file into here:</value>
+    <value>Drag and Drop input file/folder into here:</value>
+  </data>
+  <data name="PrgFollowingFiles" xml:space="preserve">
+    <value>The following files will be processed:</value>
+  </data>
+  <data name="PrgNowProcessing" xml:space="preserve">
+    <value>Now processing: {0}
+Saving to: {1}</value>
   </data>
   <data name="PrgProcessingCancelled" xml:space="preserve">
     <value>Queue processing cancelled.</value>
     <comment>Displays when transcode cancelled</comment>
+  </data>
+  <data name="PrgScrollUp" xml:space="preserve">
+    <value>List may be long, you might want to scroll up.</value>
   </data>
   <data name="PrgVerifyRenderSettings" xml:space="preserve">
     <value>{0} will render with the current settings:
@@ -299,6 +309,6 @@ Resolution: {1}
 FPS: {2}
 Codec: {3}
 
-This command will be run:</value>
+This command will be processed:</value>
   </data>
 </root>

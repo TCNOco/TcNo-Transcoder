@@ -8,6 +8,8 @@ namespace TcNo_Transcoder
 {
     class Global
     {
+        public static string LineString = "---------------------";
+
         // Global variable definitions
         // Global static strings that won't change, and can be localised will be located in GlobalStr.resx, and their different language counterparts.
         public static int Bit;                  // Operating system bit
@@ -16,6 +18,7 @@ namespace TcNo_Transcoder
         public static string ExeLocation;       // Folder in which the program's .exe is
         public static DateTime EncodeStartTime;
         public static string LastFileEncoded;
+        public static bool CustomFolder = false;
 
         // User settings
         public static Dictionary<string, string> Settings =

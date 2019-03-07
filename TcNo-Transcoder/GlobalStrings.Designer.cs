@@ -235,7 +235,7 @@ namespace TcNo_Transcoder {
         ///   Looks up a localized string similar to Using {0}
         ///The file will save to: {1}
         ///If you want it saved to a new directory, exit, and set it in settings.bat.
-        ///Press any key to continue....
+        ///Press enter to continue....
         /// </summary>
         internal static string PrgChangeDir {
             get {
@@ -274,11 +274,30 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Drag and Drop input file into here:.
+        ///   Looks up a localized string similar to Drag and Drop input file/folder into here:.
         /// </summary>
         internal static string PrgDragDropPrompt {
             get {
                 return ResourceManager.GetString("PrgDragDropPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following files will be processed:.
+        /// </summary>
+        internal static string PrgFollowingFiles {
+            get {
+                return ResourceManager.GetString("PrgFollowingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now processing: {0}
+        ///Saving to: {1}.
+        /// </summary>
+        internal static string PrgNowProcessing {
+            get {
+                return ResourceManager.GetString("PrgNowProcessing", resourceCulture);
             }
         }
         
@@ -292,12 +311,21 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List may be long, you might want to scroll up..
+        /// </summary>
+        internal static string PrgScrollUp {
+            get {
+                return ResourceManager.GetString("PrgScrollUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} will render with the current settings:
         ///Resolution: {1}
         ///FPS: {2}
         ///Codec: {3}
         ///
-        ///This command will be run:.
+        ///This command will be processed:.
         /// </summary>
         internal static string PrgVerifyRenderSettings {
             get {

@@ -135,6 +135,14 @@ namespace TcNo_Transcoder
             Global.NvexeFull = String.Format(@"{0}\x{1}\{2}", Global.ExeLocation, Global.Bit.ToString(), Global.Nvexe);
         }
 
+        public static void CheckIfCustomFolder()
+        {
+            if (Functions.SettingNull(Global.Settings["OutputDirectory"]))
+            {
+                Global.CustomFolder = true;
+            }
+        }
+
         public static string GetTaskArgs(string inputFile, string outputFolder)
         {
             string Arg = "-i \"" + inputFile + "\"";
@@ -174,13 +182,93 @@ namespace TcNo_Transcoder
             }
 
 
-            Arg += " --output \"" + outputFolder + "\\" + Path.GetFileNameWithoutExtension(inputFile) + Global.Settings["Suffix"] + "." + Global.Settings["OutputFormat"] + "\"";
+            Arg += " --output \"" + OutputFileString(outputFolder, inputFile);
             return Arg;
+        }
+
+        public static string OutputFileString(string outputFolder, string inputFile)
+        {
+            return outputFolder + "\\" + Path.GetFileNameWithoutExtension(inputFile) + Global.Settings["Suffix"] + "." + Global.Settings["OutputFormat"] + "\"";
         }
 
         public static bool SettingNull(string inString)
         {
             return inString == " " || inString == "" || inString == string.Empty;
+        }
+
+        public static void ProcessFileOrFolder(string inObject, string outFolder)
+        {
+            if (IsDirectory(inObject))
+            {
+                // Directory
+                foreach (string file in Directory.EnumerateFiles(inObject, "*.*", SearchOption.AllDirectories))
+                {
+                    outFolder = GetOutputDiretory(file);
+                    ProcessFile(file, outFolder);
+                }
+            }
+            else
+            {
+                // File
+                outFolder = GetOutputDiretory(inObject);
+                ProcessFile(inObject, outFolder);
+            }
+        }
+
+        public static string GetOutputDiretory(string obj)
+        {
+            if (!Global.CustomFolder)
+            {
+                return Path.GetDirectoryName(obj);
+            }
+            return Global.Settings["OutputDirectory"];
+        }
+
+        public static void ListFileOrFolder(string inObject)
+        {
+            if (IsDirectory(inObject))
+            {
+                // Directory
+                foreach (string file in Directory.EnumerateFiles(inObject, "*.*", SearchOption.AllDirectories))
+                {
+                    Console.WriteLine(file);
+                }
+            }
+            else
+            {
+                // File
+                Console.WriteLine(inObject);
+            }
+        }
+
+
+        public static void ProcessFile(string inFile, string outFolder)
+        {
+            Console.WriteLine("\n" + Global.LineString + "\n" + String.Format(GlobalStrings.PrgNowProcessing, inFile, OutputFileString(outFolder, inFile)));
+            Functions.RunProgram(Global.NvexeFull, Functions.GetTaskArgs(inFile, outFolder));
+        }
+
+        public static bool IsDirectory(string inObject)
+        {
+            return (File.GetAttributes(inObject) & FileAttributes.Directory) == FileAttributes.Directory;
+        }
+
+        public static bool IsFileOrFolder(string inObject)
+        {
+            try
+            {
+                if ((File.GetAttributes(inObject) & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    return true;
+                } else
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

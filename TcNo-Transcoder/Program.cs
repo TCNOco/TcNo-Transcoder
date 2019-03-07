@@ -29,6 +29,10 @@ namespace TcNo_Transcoder
         static void Main(string[] args)
         {
 
+            /////////////////////////////////////--------------------------------
+            // TODO:
+            // Queue processing
+            /////////////////////////////////////--------------------------------
             Console.Title = "TechNobo's Transcoder";
             Global.ExeLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Functions.LoadSettingsFile();
@@ -36,15 +40,9 @@ namespace TcNo_Transcoder
 
             Functions.CheckOSBit();
 
+            Functions.CheckIfCustomFolder();
 
-
-            /* //TEST
-            Functions.ProcessFile("f");
-            Console.Read();
-
-            // */
-
-
+            Console.WriteLine(GlobalStrings.InfoWelcome);
 
             if (args.Length != 0)
             {
@@ -74,76 +72,91 @@ namespace TcNo_Transcoder
                     case "-q":
                     case "--queue":
                         Console.WriteLine("TO DO");
+                        /////////////////////////////////////--------------------------------
                         break;
 
                 }
 
                 // If there were files dragged onto the program
-                Console.WriteLine(GlobalStrings.PrgDragDropNotice);
+                Console.WriteLine("\n" + GlobalStrings.PrgDragDropNotice);
+                // Display each file to be processed
                 foreach (var i in args)
                 {
-                    Console.WriteLine(i);
-                }
-                Console.WriteLine();
-
-
-
-                if (System.IO.File.Exists("skipcheck"))
-                {
-                    Console.WriteLine("Check skipped");
-                }
-                else
-                {
-                    while (true)
+                    // If not file or folder, it will skip argument
+                    if (Functions.IsFileOrFolder(i))
                     {
-                        Console.Write(GlobalStrings.PrgContinue + " (Y/N): ");
-                        string response = Console.ReadLine();
-                        if (response.ToLower() == "y")
-                        {
-                            Console.WriteLine("Yes");
-                            break;
-                        }
-                        else if (response.ToLower() == "n")
-                        {
-                            Console.WriteLine(GlobalStrings.PrgProcessingCancelled);
-                            Functions.AnyKeyToClose();
-                        }
+                        Functions.ListFileOrFolder(i);
                     }
                 }
-            } else
-            {
-                // Program launched without arguments
-                Console.WriteLine(GlobalStrings.InfoWelcome);
-                Console.Write("\n" + GlobalStrings.PrgDragDropPrompt + " ");
-                string usrInput = Console.ReadLine().Replace("\"", "");
-                string outputFolder = Global.Settings["OutputDirectory"];
+                Console.WriteLine(Global.LineString + "\n");
 
-                if (Functions.SettingNull(Global.Settings["OutputDirectory"]))
+                // Process files after confirmation.
+                while (true)
                 {
-                    outputFolder = Path.GetDirectoryName(usrInput);
-                }
-                Console.WriteLine("\n" + String.Format(GlobalStrings.PrgChangeDir, "NVEncC x" + Global.Bit.ToString(), outputFolder));
-                Console.Read();
-
-                Console.WriteLine(String.Format(GlobalStrings.PrgVerifyRenderSettings, usrInput, Global.Settings["Resolution"], Global.Settings["FPS"], Global.Settings["VideoCodec"]));
-                Console.WriteLine("\n" + Global.Nvexe + " " + Functions.GetTaskArgs(usrInput, outputFolder));
-                Console.WriteLine("\n" + GlobalStrings.PrgCorrect);
-                if (Console.ReadLine().ToLower() == "y")
-                {
-                    // Process
-                } else
-                {
-                    Console.WriteLine(GlobalStrings.ErrStopped + "\n");
-                    Console.WriteLine(GlobalStrings.InfoCompleteNoTime);
-                }
-                Console.Read();
+                    Console.Write(GlobalStrings.PrgCorrect + " ");
+                    string response = Console.ReadLine();
+                    if (response.ToLower() == "y")
+                    {
+                        foreach (var i in args)
+                        {
+                            Functions.ProcessFileOrFolder(i, Global.Settings["OutputDirectory"]);
+                        }
+                        break;
+                    }
+                    else if (response.ToLower() == "n")
+                    {
+                        Console.WriteLine(GlobalStrings.PrgProcessingCancelled);
+                        Functions.AnyKeyToClose();
+                    }
+                    }
             }
-            Console.Read();
-        }
+            else
+            {
+                while (true)
+                {
+                    // Program launched without arguments
+                    Console.Write("\n" + GlobalStrings.PrgDragDropPrompt + " "); // Asks user to drag in file or folder
+                    string usrInput = Console.ReadLine().Replace("\"", ""); // Remove surrounding quotations, if applicable.
 
-        public static void Help()
-        {
+                    // Set output folder to user settings, or original file's dir, if not specified.
+                    string outputFolder = Functions.GetOutputDiretory(usrInput);
 
+                    // Prompts the user that if they want to change the directory, they must change it under settings.
+                    Console.WriteLine("\n" + String.Format(GlobalStrings.PrgChangeDir, "NVEncC x" + Global.Bit.ToString(), outputFolder));
+                    Console.ReadLine();
+
+                    // Tells the user the current transcode settings
+                    Console.WriteLine(String.Format(GlobalStrings.PrgVerifyRenderSettings, usrInput, Global.Settings["Resolution"], Global.Settings["FPS"], Global.Settings["VideoCodec"]));
+
+                    // Either lists files (if a folder was supplied), or tells the user what commmand will be run on the file they entered.
+                    if (Functions.IsDirectory(usrInput))
+                    {
+                        Console.WriteLine(GlobalStrings.PrgFollowingFiles + "\n" + Global.LineString);
+                        Functions.ListFileOrFolder(usrInput);
+                        Console.WriteLine(Global.LineString + "\n" + GlobalStrings.PrgScrollUp);
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n" + Global.Nvexe + " " + Functions.GetTaskArgs(usrInput, outputFolder));
+                    }
+
+                    // Checks with user if settings correct
+                    Console.Write("\n" + GlobalStrings.PrgCorrect + " ");
+                    if (Console.ReadLine().ToLower() == "y")
+                    {
+                        Console.WriteLine();
+                        Global.EncodeStartTime = DateTime.Now;
+                        Functions.ProcessFileOrFolder(usrInput, outputFolder);
+                        Console.WriteLine("\n" + GlobalStrings.InfoComplete, Global.EncodeStartTime, DateTime.Now);
+                    }
+                    else
+                    {
+                        Console.WriteLine(GlobalStrings.ErrStopped + "\n");
+                        Console.WriteLine(GlobalStrings.InfoCompleteNoTime);
+                    }
+                }
+            }
+            
         }
     }
 }
