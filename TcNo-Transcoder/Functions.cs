@@ -137,7 +137,7 @@ namespace TcNo_Transcoder
 
         public static void CheckIfCustomFolder()
         {
-            if (Functions.SettingNull(Global.Settings["OutputDirectory"]))
+            if (!Functions.SettingNull(Global.Settings["OutputDirectory"]))
             {
                 Global.CustomFolder = true;
             }
