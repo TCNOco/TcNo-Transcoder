@@ -1,0 +1,5 @@
+﻿  Microsoft (R) C/C++ Optimizing Compiler Version 19.20.27404 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /W3 /WX- /diagnostics:classic /sdl /MP /O2 /Ot /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc142.pdb" /Gd /TP /analyze- /FC /errorReport:prompt "TcNo-Transcoder-Queue.cpp"
+cl : Command line error D8016: '/O2' and '/RTC1' command-line options are incompatible

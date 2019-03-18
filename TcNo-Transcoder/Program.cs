@@ -42,7 +42,7 @@ namespace TcNo_Transcoder
 
             Functions.CheckIfCustomFolder();
 
-            Console.WriteLine(GlobalStrings.InfoWelcome);
+            Console.WriteLine(GlobalStrings.InfoWelcome, Constants.Version);
 
             if (args.Length != 0)
             {

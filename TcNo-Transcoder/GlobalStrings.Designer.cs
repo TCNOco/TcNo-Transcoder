@@ -19,7 +19,7 @@ namespace TcNo_Transcoder {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class GlobalStrings {
@@ -234,7 +234,7 @@ namespace TcNo_Transcoder {
         /// <summary>
         ///   Looks up a localized string similar to Using {0}
         ///The file will save to: {1}
-        ///If you want it saved to a new directory, exit, and set it in settings.bat.
+        ///If you want it saved to a new directory, exit, and set it in settings.cfg.
         ///Press enter to continue....
         /// </summary>
         internal static string PrgChangeDir {
@@ -263,7 +263,7 @@ namespace TcNo_Transcoder {
         
         /// <summary>
         ///   Looks up a localized string similar to ATTENTION!
-        ///Dragging files in will process them INSTANTLY using the settings in settings.bat!
+        ///Dragging files in will process them INSTANTLY using the settings in settings.cfg!
         ///
         ///The following files will be processed:.
         /// </summary>
