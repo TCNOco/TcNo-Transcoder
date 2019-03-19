@@ -39,6 +39,11 @@ namespace TcNo_Transcoder
             }
             Console.WriteLine();
             Console.WriteLine(GlobalStrings.PrgAnyKeyToClose);
+            ReadKeyScrollUpDown(BeforeLeft, BeforeTop);
+            System.Environment.Exit(1);
+        }
+        public static void ReadKeyScrollUpDown(int BeforeLeft, int BeforeTop)
+        {  
             // Get cursor position to set it back later. Stops weird text overwriting in console.
             int AfterLeft = Console.CursorLeft;
             int AfterTop = Console.CursorTop;
@@ -50,9 +55,7 @@ namespace TcNo_Transcoder
             // Brings cursor back down to end of output above, and shows.
             Console.SetCursorPosition(AfterLeft, AfterTop);
             Console.CursorVisible = true;
-            System.Environment.Exit(1);
         }
-
         public static void RunProgram(string SProgram, string SArguments)
         {
             var info = new ProcessStartInfo(SProgram, SArguments)
@@ -119,7 +122,7 @@ namespace TcNo_Transcoder
             Console.ReadKey();
             System.Environment.Exit(1);
         }
-        
+
         public static void CheckOSBit()
         {
             if (Environment.Is64BitOperatingSystem)
@@ -164,7 +167,8 @@ namespace TcNo_Transcoder
             if (Global.Settings["CopyAudio"] == "1")
             {
                 Arg += " --audio-copy";
-            } else
+            }
+            else
             {
                 Arg += " --audio-codec" + Global.Settings["AudioCodec"];
             }
@@ -260,7 +264,8 @@ namespace TcNo_Transcoder
                 if ((File.GetAttributes(inObject) & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     return true;
-                } else
+                }
+                else
                 {
                     return true;
                 }
@@ -269,6 +274,71 @@ namespace TcNo_Transcoder
             {
                 return false;
             }
+        }
+
+        public static bool QueueExists()
+        {
+            return File.Exists(Global.QueueFile);
+        }
+        public static void LoadQueue()
+        {
+            Global.QueueText = File.ReadAllText(Global.QueueFile);
+            Global.QueueValid = Global.QueueText.Length > 5;
+        }
+
+        public static void QueryQueue()
+        {
+            Console.Write(GlobalStrings.PrgQueueList, Global.QueueText);
+            bool validkey = false;
+            while (!validkey)
+            {
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.Y:
+                        ProcessQueue();
+                        break;
+                    case ConsoleKey.N:
+                        Functions.AnyKeyToClose();
+                        break;
+                }
+            }
+        }
+
+        public static void ProcessQueue()
+        {
+            // Prompts the user that if they want to change the directory, they must change it under settings.
+            Console.WriteLine("\n\n" + String.Format(GlobalStrings.PrgChangeDirQueue, "NVEncC x" + Global.Bit.ToString(), Global.Settings["Resolution"], Global.Settings["FPS"], Global.Settings["VideoCodec"]) + "\n");
+            Console.ReadKey();
+
+            Global.QueueStartTime = DateTime.Now;
+            foreach (var l in Global.QueueText.Split('\n'))
+            {
+                if (l != string.Empty)
+                {
+                    string line = l.Replace("\"", "").Replace("\r", "");
+                    // Set output folder to user settings, or original file's dir, if not specified.
+                    string outputFolder = Functions.GetOutputDiretory(line);
+                    if (Functions.IsDirectory(line))
+                    {
+                        Console.WriteLine(String.Format(GlobalStrings.PrgQueueFollowingFiles, line) + "\n" + Global.LineString);
+                        Functions.ListFileOrFolder(line);
+                        Console.WriteLine(Global.LineString + "\n");
+                    }
+                    Global.EncodeStartTime = DateTime.Now;
+                    Functions.ProcessFileOrFolder(line, outputFolder);
+                    Console.WriteLine("\n" + GlobalStrings.InfoItemComplete, Global.EncodeStartTime, DateTime.Now);
+
+                }
+            }
+            QueueComplete();
+            Console.WriteLine("\n" + GlobalStrings.InfoQueueComplete, Global.QueueStartTime, DateTime.Now);
+        }
+
+        public static void QueueComplete()
+        {
+            DateTime d = DateTime.Now;
+            string OldQueue = "extra/queue-" + d.Day + '-' + d.Month + '-' + d.Year + ' ' + d.Hour + '-' + d.Minute + '-' + d.Second + ".txt";
+            File.Move(Global.QueueFile, OldQueue);
         }
     }
 }

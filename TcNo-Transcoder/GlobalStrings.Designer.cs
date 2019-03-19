@@ -71,6 +71,24 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to queue.exe appears to be empty. Please check the file contains a new file/folder on each new line, with no trailing spaces or extra characters. (A new line at the end of the file is intended).
+        /// </summary>
+        internal static string ErrQueueEmpty {
+            get {
+                return ResourceManager.GetString("ErrQueueEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to queue.txt not found or inaccessible in ./extra/ folder.
+        /// </summary>
+        internal static string ErrQueueNotFound {
+            get {
+                return ResourceManager.GetString("ErrQueueNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ERROR: {0} was not found in the settings file, or there was another error involving it.
         ///Please verify the settings file and try again..
         /// </summary>
@@ -187,6 +205,36 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item complete.
+        ///---------------------
+        ///Start time: {0} | Finish time: {1}
+        ///---------------------.
+        /// </summary>
+        internal static string InfoItemComplete {
+            get {
+                return ResourceManager.GetString("InfoItemComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything complete.
+        ///---------------------
+        ///Queue start time: {0}
+        ///Queue finish time: {1}
+        ///---------------------
+        ///Thanks for using TechNobo&apos;s Transcoder!
+        ///---------------------
+        ///GitHub: https://github.com/TcNobo/TcNo-Transcoder
+        ///YouTube: https://YouTube.com/TechNobo
+        ///Web: https://tcno.co/.
+        /// </summary>
+        internal static string InfoQueueComplete {
+            get {
+                return ResourceManager.GetString("InfoQueueComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TechNobo&apos;s Video Transcoder
         ///------------------------------------------
         ///
@@ -240,6 +288,21 @@ namespace TcNo_Transcoder {
         internal static string PrgChangeDir {
             get {
                 return ResourceManager.GetString("PrgChangeDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using {0}
+        ///The files will save to their respective directories.
+        ///Resolution: {1}
+        ///FPS: {2}
+        ///Codec: {3}
+        ///If you want them saved to a new directory, or you want different settings: exit, and set theem in settings.cfg.
+        ///Press enter to continue....
+        /// </summary>
+        internal static string PrgChangeDirQueue {
+            get {
+                return ResourceManager.GetString("PrgChangeDirQueue", resourceCulture);
             }
         }
         
@@ -307,6 +370,40 @@ namespace TcNo_Transcoder {
         internal static string PrgProcessingCancelled {
             get {
                 return ResourceManager.GetString("PrgProcessingCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A queue is detected. Would you like to process it? (Y to process / ANY other key to skip):.
+        /// </summary>
+        internal static string PrgQueryQueue {
+            get {
+                return ResourceManager.GetString("PrgQueryQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is a directory. The following will be processed:.
+        /// </summary>
+        internal static string PrgQueueFollowingFiles {
+            get {
+                return ResourceManager.GetString("PrgQueueFollowingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --------------------------------------
+        ///The following files will be processed
+        ///--------------------------------------
+        ///{0}
+        ///--------------------------------------
+        ///
+        ///You can edit the queue in the TcNo-Transcoder/extra/queue.txt file.
+        ///Do you want to process these files? (y/n):.
+        /// </summary>
+        internal static string PrgQueueList {
+            get {
+                return ResourceManager.GetString("PrgQueueList", resourceCulture);
             }
         }
         

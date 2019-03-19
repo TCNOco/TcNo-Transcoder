@@ -34,6 +34,7 @@ namespace TcNo_Transcoder
             // Queue processing
             /////////////////////////////////////--------------------------------
             Console.Title = "TechNobo's Transcoder";
+            Console.TreatControlCAsInput = true; // Prevent example from ending if CTL+C is pressed.
             Global.ExeLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Functions.LoadSettingsFile();
             Functions.VerifySettingsFile();
@@ -42,7 +43,7 @@ namespace TcNo_Transcoder
 
             Functions.CheckIfCustomFolder();
 
-            Console.WriteLine(GlobalStrings.InfoWelcome, Constants.Version);
+            Console.WriteLine(String.Format(GlobalStrings.InfoWelcome, Constants.Version) + "\n");
 
             if (args.Length != 0)
             {
@@ -51,18 +52,22 @@ namespace TcNo_Transcoder
                     case "-h":
                     case "--help":
                         Functions.Information("Help");
+                        Functions.AnyKeyToClose();
                         break;
                     case "-i":
                     case "--info":
                         Console.WriteLine("INFO");
+                        Functions.AnyKeyToClose();
                         break;
                     case "-d":
                     case "--devices":
                         Functions.Information("Devices");
+                        Functions.AnyKeyToClose();
                         break;
                     case "-a":
                     case "--audio":
                         Functions.Information("Audio");
+                        Functions.AnyKeyToClose();
                         break;
                     case "-v":
                     case "--video":
@@ -71,10 +76,22 @@ namespace TcNo_Transcoder
                         break;
                     case "-q":
                     case "--queue":
-                        Console.WriteLine("TO DO");
-                        /////////////////////////////////////--------------------------------
+                        if (!Functions.QueueExists())
+                        {
+                            Console.WriteLine(GlobalStrings.ErrQueueNotFound);
+                        } else
+                        {
+                            Functions.LoadQueue();
+                            if (!Global.QueueValid)
+                            {
+                                Console.WriteLine(GlobalStrings.ErrQueueEmpty);
+                            } else
+                            {
+                                Functions.QueryQueue();
+                            }
+                        }
+                        Functions.AnyKeyToClose();
                         break;
-
                 }
 
                 // If there were files dragged onto the program
@@ -112,6 +129,25 @@ namespace TcNo_Transcoder
             }
             else
             {
+                // Queue file processing option, if file exists.
+                if (Functions.QueueExists())
+                {
+                    Functions.LoadQueue();
+                    if (!Global.QueueValid)
+                    {
+                        Console.WriteLine(GlobalStrings.ErrQueueEmpty);
+                    }
+                    else
+                    {
+                        Console.Write(GlobalStrings.PrgQueryQueue);
+                        if (Console.ReadKey().Key == ConsoleKey.Y)
+                        {
+                            Console.WriteLine();
+                            Functions.QueryQueue();
+                        }
+                    }
+                }
+
                 while (true)
                 {
                     // Program launched without arguments
