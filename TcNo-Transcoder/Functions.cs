@@ -184,6 +184,10 @@ namespace TcNo_Transcoder
             {
                 Arg += " --deblock";
             }
+            if (Global.Settings["GPU"] != "")
+            {
+                Arg += " --device " + Global.Settings["GPU"];
+            }
 
 
             Arg += " --output \"" + OutputFileString(outputFolder, inputFile);

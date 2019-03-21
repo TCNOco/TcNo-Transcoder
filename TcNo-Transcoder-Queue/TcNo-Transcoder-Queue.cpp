@@ -11,14 +11,14 @@
 // The less that is processed, the better.
 // Made to be quick and lightweight, hence it's done in C++.
 
-#include <iostream>
 #include <fstream>
 
 int main(int argc, char* argv[])
 {
 	std::ofstream outF;
-
-	outF.open("queue.txt", std::ofstream::app);
+	std::string ex = argv[0];
+	
+	outF.open(ex.substr(0, ex.find_last_of('\\') + 1)+"queue.txt", std::ofstream::app);
 	for (int i = 1; i < argc; ++i)
 		outF << argv[i] << '\n';
 	return 0;
