@@ -280,6 +280,15 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PRESS ANY KEY TO CONTINUE....
+        /// </summary>
+        internal static string PrgAnyKeyToContinue {
+            get {
+                return ResourceManager.GetString("PrgAnyKeyToContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Using {0}
         ///The file will save to: {1}
         ///If you want it saved to a new directory, exit, and set it in settings.cfg.

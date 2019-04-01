@@ -176,20 +176,12 @@ namespace TcNo_Transcoder
                         Console.WriteLine("\n" + Global.Nvexe + " " + Functions.GetTaskArgs(usrInput, outputFolder));
                     }
 
-                    // Checks with user if settings correct
-                    Console.Write("\n" + GlobalStrings.PrgCorrect + " ");
-                    if (Console.ReadLine().ToLower() == "y")
-                    {
-                        Console.WriteLine();
-                        Global.EncodeStartTime = DateTime.Now;
-                        Functions.ProcessFileOrFolder(usrInput, outputFolder);
-                        Console.WriteLine("\n" + GlobalStrings.InfoComplete, Global.EncodeStartTime, DateTime.Now);
-                    }
-                    else
-                    {
-                        Console.WriteLine(GlobalStrings.ErrStopped + "\n");
-                        Console.WriteLine(GlobalStrings.InfoCompleteNoTime);
-                    }
+                    Functions.AnyKeyToContinue();
+                    
+                    Console.WriteLine();
+                    Global.EncodeStartTime = DateTime.Now;
+                    Functions.ProcessFileOrFolder(usrInput, outputFolder);
+                    Console.WriteLine("\n" + GlobalStrings.InfoComplete, Global.EncodeStartTime, DateTime.Now);
                 }
             }
             

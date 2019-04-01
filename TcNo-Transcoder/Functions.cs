@@ -113,7 +113,7 @@ namespace TcNo_Transcoder
                 }
             }
         }
-        #endregion  
+        #endregion
         // -----------------------------------
 
         public static void AnyKeyToClose()
@@ -121,6 +121,11 @@ namespace TcNo_Transcoder
             Console.WriteLine(GlobalStrings.PrgAnyKeyToClose);
             Console.ReadKey();
             System.Environment.Exit(1);
+        }
+        public static void AnyKeyToContinue()
+        {
+            Console.WriteLine(GlobalStrings.PrgAnyKeyToContinue);
+            Console.ReadKey();
         }
 
         public static void CheckOSBit()

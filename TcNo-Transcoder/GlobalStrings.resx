@@ -291,6 +291,9 @@ Run with -i or --info to display info.
   <data name="PrgAnyKeyToClose" xml:space="preserve">
     <value>PRESS ANY KEY TO CLOSE...</value>
   </data>
+  <data name="PrgAnyKeyToContinue" xml:space="preserve">
+    <value>PRESS ANY KEY TO CONTINUE...</value>
+  </data>
   <data name="PrgChangeDir" xml:space="preserve">
     <value>Using {0}
 The file will save to: {1}
