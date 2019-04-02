@@ -24,6 +24,7 @@ namespace TcNo_Transcoder
         public static bool QueueValid;          // If queue.txt contains text, or it's just empty
         public static string QueueText;         // For storing queue.txt lines
 
+
         // User settings
         public static Dictionary<string, string> Settings =
             new Dictionary<string, string>();

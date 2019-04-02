@@ -70,9 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <AdditionalFiles Include="Config\settings.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AdditionalFiles>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GlobalStrings.resx">
@@ -92,8 +89,10 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)Config\settings.cfg $(ProjectDir)$(OutDir)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -74,6 +74,13 @@ namespace TcNo_Transcoder
             try
             {
                 string SettingsFileLocation = String.Format(@"{0}\settings.cfg", Global.ExeLocation);
+                if (!File.Exists(SettingsFileLocation))
+                {
+                    Console.WriteLine(GlobalStrings.ErrFailedSettingsFind + '\n');
+                    File.WriteAllLines(SettingsFileLocation, GlobalStrings._LOCALISEDSETTINGS.Split('\n'));
+                }
+
+
                 string[] lines = System.IO.File.ReadAllLines(SettingsFileLocation);
                 foreach (var line in lines)
                 {

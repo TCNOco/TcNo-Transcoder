@@ -61,6 +61,43 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to # ----------------------------------------------------
+        ///# Welcome to TechNobo&apos;s Video Transcoder settings
+        ///# Created by TechNobo (Wesley Pyburn): https://tcno.co/
+        ///# GitHub Repo: https://github.com/TcNobo/TcNo-Transcoder
+        ///# ----------------------------------------------------
+        ///
+        ///
+        ///# ----------------------------------------------------
+        ///# --------------------- REQUIRED ---------------------
+        ///# ----------------------------------------------------
+        ///# Output format
+        ///OutputFormat=mp4
+        ///
+        ///# Copy the audio?
+        ///# Yes  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string _LOCALISEDSETTINGS {
+            get {
+                return ResourceManager.GetString("_LOCALISEDSETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --------------------- INFORMATION ---------------------
+        ///--&gt; Settings.cfg file was generated.
+        ///--&gt; If this is your first time using this program, make sure to read the wiki:
+        ///--&gt; https://github.com/TcNobo/TcNo-Transcoder/wiki
+        ///--&gt; (You can delete the file to reset it at any stage)
+        ///-------------------------------------------------------.
+        /// </summary>
+        internal static string ErrFailedSettingsFind {
+            get {
+                return ResourceManager.GetString("ErrFailedSettingsFind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to read settings file. Check everything is correct and try again.
         ///Error: {0}.
         /// </summary>

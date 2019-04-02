@@ -17,7 +17,7 @@ namespace TcNo_Transcoder
 {
     class Constants
     {
-        public const string Version = "0.1.1";
+        public const string Version = "0.2.0";
         // NvencC 4.31 info:
         // - Released: 12/02/2019
         // - GitHub: https://github.com/rigaya/NVEnc/releases
@@ -31,11 +31,20 @@ namespace TcNo_Transcoder
 
             /////////////////////////////////////--------------------------------
             // TODO:
-            // Queue processing
+            // Queue processing [DONE]
+            // Add REMOVE from registry launch option to TcNo-Transcode-ContextMenu
+            // Add commands to ADD and REMOVE from registry (Launching TcNo-Transcode-ContextMenu.exe)
+            // -- Possibly check Nvidia driver version, for incompatibility warning (Will still let program continue, with error)
+            // Clean up files
+            // Update Wiki for C# version
+            // Update NvencC
+            // -- v Future v --
+            // Add FFMPEG compatability (Possibly a second settings file, and/or a whole new settings folder. Shared settings?
             /////////////////////////////////////--------------------------------
             Console.Title = "TechNobo's Transcoder";
             Console.TreatControlCAsInput = true; // Prevent example from ending if CTL+C is pressed.
             Global.ExeLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Directory.SetCurrentDirectory(Global.ExeLocation); // Make sure it's running in the right directory. Without this, -q and --queue from Shell command (via Registry) fails, as it's running in the wrong folder.
             Functions.LoadSettingsFile();
             Functions.VerifySettingsFile();
 
