@@ -84,6 +84,17 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error deleting the old queue file. It will be left as is, for you to manually delete.
+        ///Error:
+        ///{0}.
+        /// </summary>
+        internal static string ErrDeleteQueue {
+            get {
+                return ResourceManager.GetString("ErrDeleteQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to --------------------- INFORMATION ---------------------
         ///--&gt; Settings.cfg file was generated.
         ///--&gt; If this is your first time using this program, make sure to read the wiki:

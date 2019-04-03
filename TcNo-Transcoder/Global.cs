@@ -25,6 +25,9 @@ namespace TcNo_Transcoder
         public static string QueueText;         // For storing queue.txt lines
         public static float GPUDriver;
 
+        public static string InputFile;
+        public static string OutputFile;
+
 
 
         // User settings

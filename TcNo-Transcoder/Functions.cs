@@ -113,7 +113,10 @@ namespace TcNo_Transcoder
 
         public static void VerifySettingsFile()
         {
-            string[] SettingsList = new string[] { "OutputFormat", "CopyAudio", "AudioCodec", "Suffix", "OutputDirectory", "Resolution", "FPS", "VideoCodec", "EncoderProfile", "Level", "Preset", "OutputDepth", "CUDASchedule", "DecodeMode", "SampleAspectRatio", "Lookahead", "GOPLength", "BFrames", "ReferenceFrames", "MVPrecision", "Colormatrix", "CABAC", "Deblock", "Bitrate", "VBRQuality", "MaxBitrate", "GPU", "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion" };
+            string[] SettingsList = new string[] { "OutputFormat", "CopyAudio", "AudioCodec", "Suffix", "OutputDirectory", "Resolution", "FPS",
+                "VideoCodec", "EncoderProfile", "Level", "Preset", "OutputDepth", "CUDASchedule", "DecodeMode", "SampleAspectRatio", "Lookahead",
+                "GOPLength", "BFrames", "ReferenceFrames", "MVPrecision", "Colormatrix", "CABAC", "Deblock", "Bitrate", "VBRQuality", "MaxBitrate",
+                "GPU", "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion" };
             foreach (var s in SettingsList)
             {
                 try
@@ -169,54 +172,63 @@ namespace TcNo_Transcoder
         public static string GetTaskArgs(string inputFile, string outputFolder)
         {
             string Arg = "-i \"" + inputFile + "\"";
-            Arg += " --" + Global.Settings["DecodeMode"];
-            Arg += " --codec " + Global.Settings["VideoCodec"];
-            Arg += " --fps " + Global.Settings["FPS"];
-            Arg += " --output-res " + Global.Settings["Resolution"];
-            Arg += " --profile " + Global.Settings["EncoderProfile"];
-            Arg += " --level " + Global.Settings["Level"];
-            Arg += " --" + Global.Settings["Bitrate"];
-            Arg += " --preset " + Global.Settings["Preset"];
-            Arg += " --lookahead " + Global.Settings["Lookahead"];
-            Arg += " --cuda-schedule " + Global.Settings["CUDASchedule"];
-            Arg += " --gop-len " + Global.Settings["GOPLength"];
-            Arg += " --bframes " + Global.Settings["BFrames"];
-            Arg += " --ref " + Global.Settings["ReferenceFrames"];
-            Arg += " --mv-precision " + Global.Settings["MVPrecision"];
-            Arg += " --colormatrix " + Global.Settings["Colormatrix"];
-            if (Global.Settings["CopyAudio"] == "1")
+            if (Global.Settings["Override"] == "" || Global.Settings["Override"] == String.Empty || Global.Settings["Override"] == "0")
             {
-                Arg += " --audio-copy";
+                Arg += " --" + Global.Settings["DecodeMode"];
+                Arg += " --codec " + Global.Settings["VideoCodec"];
+                Arg += " --fps " + Global.Settings["FPS"];
+                Arg += " --output-res " + Global.Settings["Resolution"];
+                Arg += " --profile " + Global.Settings["EncoderProfile"];
+                Arg += " --level " + Global.Settings["Level"];
+                Arg += " --" + Global.Settings["Bitrate"];
+                Arg += " --preset " + Global.Settings["Preset"];
+                Arg += " --lookahead " + Global.Settings["Lookahead"];
+                Arg += " --cuda-schedule " + Global.Settings["CUDASchedule"];
+                Arg += " --gop-len " + Global.Settings["GOPLength"];
+                Arg += " --bframes " + Global.Settings["BFrames"];
+                Arg += " --ref " + Global.Settings["ReferenceFrames"];
+                Arg += " --mv-precision " + Global.Settings["MVPrecision"];
+                Arg += " --colormatrix " + Global.Settings["Colormatrix"];
+                if (Global.Settings["CopyAudio"] == "1")
+                {
+                    Arg += " --audio-copy";
+                }
+                else
+                {
+                    Arg += " --audio-codec" + Global.Settings["AudioCodec"];
+                }
+                if (!SettingNull(Global.Settings["SampleAspectRatio"]))
+                {
+                    Arg += " --sar " + Global.Settings["SampleAspectRatio"];
+                }
+                if (Global.Settings["CABAC"] == "1")
+                {
+                    Arg += " --cabac";
+                }
+                if (Global.Settings["Deblock"] == "1")
+                {
+                    Arg += " --deblock";
+                }
+                if (Global.Settings["GPU"] != "")
+                {
+                    Arg += " --device " + Global.Settings["GPU"];
+                }
             }
             else
+                Console.WriteLine("OVERRIDE ENABLED! Input and Output automated, everything else is up to what you add to OtherArgs.");
+            Global.InputFile = inputFile;
+            Global.OutputFile = OutputFileString(outputFolder, inputFile);
+            Arg += " --output \"" + Global.OutputFile + "\"";
+            if (Global.Settings["OtherArgs"] != "")
             {
-                Arg += " --audio-codec" + Global.Settings["AudioCodec"];
+                Arg += " " + Global.Settings["OtherArgs"];
             }
-            if (!SettingNull(Global.Settings["SampleAspectRatio"]))
-            {
-                Arg += " --sar " + Global.Settings["SampleAspectRatio"];
-            }
-            if (Global.Settings["CABAC"] == "1")
-            {
-                Arg += " --cabac";
-            }
-            if (Global.Settings["Deblock"] == "1")
-            {
-                Arg += " --deblock";
-            }
-            if (Global.Settings["GPU"] != "")
-            {
-                Arg += " --device " + Global.Settings["GPU"];
-            }
-
-
-            Arg += " --output \"" + OutputFileString(outputFolder, inputFile);
             return Arg;
         }
 
         public static string OutputFileString(string outputFolder, string inputFile)
         {
-            return outputFolder + "\\" + Path.GetFileNameWithoutExtension(inputFile) + Global.Settings["Suffix"] + "." + Global.Settings["OutputFormat"] + "\"";
+            return outputFolder + "\\" + Path.GetFileNameWithoutExtension(inputFile) + Global.Settings["Suffix"] + "." + Global.Settings["OutputFormat"];
         }
 
         public static bool SettingNull(string inString)
@@ -313,8 +325,7 @@ namespace TcNo_Transcoder
         public static void QueryQueue()
         {
             Console.Write(GlobalStrings.PrgQueueList, Global.QueueText);
-            bool validkey = false;
-            while (!validkey)
+            while (true)
             {
                 switch (Console.ReadKey().Key)
                 {
@@ -360,9 +371,39 @@ namespace TcNo_Transcoder
 
         public static void QueueComplete()
         {
-            DateTime d = DateTime.Now;
-            string OldQueue = "extra/queue-" + d.Day + '-' + d.Month + '-' + d.Year + ' ' + d.Hour + '-' + d.Minute + '-' + d.Second + ".txt";
-            File.Move(Global.QueueFile, OldQueue);
+            if (Global.Settings["DeleteOldQueue"] == "1")
+            {
+                try
+                {
+                    File.Delete(Global.QueueFile);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(String.Format(GlobalStrings.ErrDeleteQueue, ex.ToString()));
+                }
+            }
+            else
+            {
+                DateTime d = DateTime.Now;
+                string OldQueue = "extra/queue-" + d.Day + '-' + d.Month + '-' + d.Year + ' ' + d.Hour + '-' + d.Minute + '-' + d.Second + ".txt";
+                File.Move(Global.QueueFile, OldQueue);
+            }
+
+            if (!(Global.Settings["AfterCompletion"] == "" || Global.Settings["AfterCompletion"] == String.Empty))
+            {
+                try
+                {
+                    string AC = Global.Settings["AfterCompletion"].Replace("%outF%", Global.OutputFile);
+
+                    Process ContextProcessADD = Process.Start(AC);
+                    ContextProcessADD.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
         }
         public static void GetNvidiaDriver()
         {

@@ -117,6 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrDeleteQueue" xml:space="preserve">
+    <value>There was an error deleting the old queue file. It will be left as is, for you to manually delete.
+Error:
+{0}</value>
+  </data>
   <data name="ErrFailedSettingsFind" xml:space="preserve">
     <value>--------------------- INFORMATION ---------------------
 --&gt; Settings.cfg file was generated.
@@ -447,7 +452,7 @@ CopyAudio=1
 
 # Audio codec
 # (REQUIRES audiocopy setting above to be 0!)
-# To check available encoders, start TcNo-Transcoder.bat with the -a or --audio argument.
+# To check available encoders, start TcNo-Transcoder.exe with the -a or --audio argument.
 # OR enter either x32 or x64, and run "nvencc --check-encoders" or "NVEncC64 --check-encoders"
 AudioCodec=
 
@@ -472,7 +477,7 @@ FPS=60
 
 # Codec of the output file.
 # codec=&lt;h264/h265&gt;
-# To check available encoders, start TcNo-Transcoder.bat with the -v or --video argument.
+# To check available encoders, start TcNo-Transcoder.exe with the -v or --video argument.
 # OR enter either x32 or x64, and run "nvencc --check-formats" or "NVEncC64 --check-formats"
 VideoCodec=h264
 
@@ -597,7 +602,7 @@ MaxBitrate=-1
 # MAKE SURE YOU KNOW WHAT GPU YOU'RE SETTING IT TO!
 # Leave this BLANK to let NVEncC choose the best card automatically.
 # gpu=&lt;int&gt;    eg. gpu=1
-GPU=1
+GPU=0
 
 # bit=&lt;32/64&gt;    -- Chooses to use 32 or 64 bit Windows. Detects automatically if not set.
 OSBit=
@@ -632,13 +637,16 @@ DeleteOldQueue=0
 # For example.
 # ----------------
 # Keep in mind, the program is in either the x32 or x64 directory when this command is run.
-# You can run multiple lines of code by creating another file (in the base directory -- not x32 or x64) and entering the following into afterCompletion:
-# CALL ../runafter.bat
-# This will open runafter.bat, one directory back from x32 or x64, the same place as TcNo-Transcoder.bat. 
-# TcNo-Transcoder does the same with "CALL settings.bat" right at the top of the file :)
+# You can run multiple lines of code by creating another file (in the base directory -- not x32 or x64)
+# Create a runafter.bat file in your TcNo-Transcoder directory, then enter the following as AfterCompletion:
+# CALL runafter.bat
+#
+# This will open runafter.bat, in the same place as TcNo-Transcoder.exe. 
+#
+# Remember, this will run in the TcNo-Transcoder directory. You may need the full path of a program, if it's not already in PATH. IE: "c:\ffmpeg\ffmpeg.exe" instead of just entering "ffmpeg". Test it yourself by running the command from the TcNo-Transcoder folder.
 # ----------------
-# Default is "nothing".
+# Default is blank.
 # ----------------
-AfterCompletion=nothing</value>
+AfterCompletion=</value>
   </data>
 </root>

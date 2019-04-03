@@ -7,3 +7,12 @@ C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Tra
 C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.csproj.CoreCompileInputs.cache
 C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.exe
 C:\Users\TCNOLaptop\Desktop\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.pdb
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\bin\Release\TcNo-Transcoder.exe.config
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\bin\Release\TcNo-Transcoder.exe
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\bin\Release\TcNo-Transcoder.pdb
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.csprojAssemblyReference.cache
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo_Transcoder.GlobalStrings.resources
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.csproj.GenerateResource.cache
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.csproj.CoreCompileInputs.cache
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.exe
+E:\Projects\TcNo-Transcoder\TcNo-Transcoder\obj\Release\TcNo-Transcoder.pdb

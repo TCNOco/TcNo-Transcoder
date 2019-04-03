@@ -18,7 +18,7 @@ namespace TcNo_Transcoder
 {
     class Constants
     {
-        public const string Version = "0.3.0";
+        public const string Version = "0.3.1";
         // NvencC 4.31 info:
         // - Released: 12/02/2019
         // - GitHub: https://github.com/rigaya/NVEnc/releases
@@ -36,8 +36,11 @@ namespace TcNo_Transcoder
             // Add REMOVE from registry launch option to TcNo-Transcode-ContextMenu [DONE]
             // Add commands to ADD and REMOVE from registry (Launching TcNo-Transcode-ContextMenu.exe) [DONE]
             // -- Possibly check Nvidia driver version, for incompatibility warning (Will still let program continue, with error) [DONE]
-            // Clean up files
-            // Update Wiki for C# version
+            // Clean up files [DONE]
+            // Update Wiki for C# version [DONE]
+            // Check if file exists before processing [DONE]
+            // HOTFIX: "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion" [DONE]
+            // Update settings.cfg, for easier reading.
             // Update NvencC
             // -- v Future v --
             // Add FFMPEG compatability (Possibly a second settings file, and/or a whole new settings folder. Shared settings?
@@ -226,35 +229,42 @@ namespace TcNo_Transcoder
 
                     }
 
-
-                    // Set output folder to user settings, or original file's dir, if not specified.
-                    string outputFolder = Functions.GetOutputDiretory(usrInput);
-
-                    // Prompts the user that if they want to change the directory, they must change it under settings.
-                    Console.WriteLine("\n" + String.Format(GlobalStrings.PrgChangeDir, "NVEncC x" + Global.Bit.ToString(), outputFolder));
-                    Console.ReadLine();
-
-                    // Tells the user the current transcode settings
-                    Console.WriteLine(String.Format(GlobalStrings.PrgVerifyRenderSettings, usrInput, Global.Settings["Resolution"], Global.Settings["FPS"], Global.Settings["VideoCodec"]));
-
-                    // Either lists files (if a folder was supplied), or tells the user what commmand will be run on the file they entered.
-                    if (Functions.IsDirectory(usrInput))
+                    // Check if the input file or folder actually exists before continuing
+                    if (File.Exists(usrInput))
                     {
-                        Console.WriteLine(GlobalStrings.PrgFollowingFiles + "\n" + Global.LineString);
-                        Functions.ListFileOrFolder(usrInput);
-                        Console.WriteLine(Global.LineString + "\n" + GlobalStrings.PrgScrollUp);
+                        // Set output folder to user settings, or original file's dir, if not specified.
+                        string outputFolder = Functions.GetOutputDiretory(usrInput);
+
+                        // Prompts the user that if they want to change the directory, they must change it under settings.
+                        Console.WriteLine("\n" + String.Format(GlobalStrings.PrgChangeDir, "NVEncC x" + Global.Bit.ToString(), outputFolder));
+                        Console.ReadLine();
+
+                        // Tells the user the current transcode settings
+                        Console.WriteLine(String.Format(GlobalStrings.PrgVerifyRenderSettings, usrInput, Global.Settings["Resolution"], Global.Settings["FPS"], Global.Settings["VideoCodec"]));
+
+                        // Either lists files (if a folder was supplied), or tells the user what commmand will be run on the file they entered.
+                        if (Functions.IsDirectory(usrInput))
+                        {
+                            Console.WriteLine(GlobalStrings.PrgFollowingFiles + "\n" + Global.LineString);
+                            Functions.ListFileOrFolder(usrInput);
+                            Console.WriteLine(Global.LineString + "\n" + GlobalStrings.PrgScrollUp);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\n" + Global.Nvexe + " " + Functions.GetTaskArgs(usrInput, outputFolder));
+                        }
+
+                        Functions.AnyKeyToContinue();
+
+                        Console.WriteLine();
+                        Global.EncodeStartTime = DateTime.Now;
+                        Functions.ProcessFileOrFolder(usrInput, outputFolder);
+                        Console.WriteLine("\n" + GlobalStrings.InfoComplete, Global.EncodeStartTime, DateTime.Now);
                     }
                     else
                     {
-                        Console.WriteLine("\n" + Global.Nvexe + " " + Functions.GetTaskArgs(usrInput, outputFolder));
+                        Console.WriteLine("The requested file was not found, or was inaccessible");
                     }
-
-                    Functions.AnyKeyToContinue();
-                    
-                    Console.WriteLine();
-                    Global.EncodeStartTime = DateTime.Now;
-                    Functions.ProcessFileOrFolder(usrInput, outputFolder);
-                    Console.WriteLine("\n" + GlobalStrings.InfoComplete, Global.EncodeStartTime, DateTime.Now);
                 }
             }
             
