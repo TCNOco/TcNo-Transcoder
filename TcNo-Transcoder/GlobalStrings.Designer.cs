@@ -108,6 +108,15 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Nvidia GPU was found. Try run as admin, update drivers or report this issue on GitHub, providing as much info as possible..
+        /// </summary>
+        internal static string ErrNoNV {
+            get {
+                return ResourceManager.GetString("ErrNoNV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to queue.exe appears to be empty. Please check the file contains a new file/folder on each new line, with no trailing spaces or extra characters. (A new line at the end of the file is intended).
         /// </summary>
         internal static string ErrQueueEmpty {
@@ -141,6 +150,32 @@ namespace TcNo_Transcoder {
         internal static string ErrStopped {
             get {
                 return ResourceManager.GetString("ErrStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version: {0}
+        ///NvencC Version: {1}
+        ///Min. Nvidia Driver Version: {2}
+        ///
+        ///GitHub: https://github.com/TcNobo/TcNo-Transcoder
+        ///GitHub Wiki: https://github.com/TcNobo/TcNo-Transcoder/wiki
+        ///YouTube: https://YouTube.com/TechNobo
+        ///Web: https://tcno.co/.
+        /// </summary>
+        internal static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click &quot;yes&quot; when asked if you want to run as admin.
+        ///--&gt; Waiting for program completion....
+        /// </summary>
+        internal static string InfoAdminPrompt {
+            get {
+                return ResourceManager.GetString("InfoAdminPrompt", resourceCulture);
             }
         }
         
@@ -206,6 +241,16 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to --&gt; Finished!
+        ///You should now see &quot;TcNo-Transcode&quot; in your context menu..
+        /// </summary>
+        internal static string InfoContextMenuComplete {
+            get {
+                return ResourceManager.GetString("InfoContextMenuComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NOTE:
         ///When manually setting: use 0, 1, or any other integer, next to the GPU of your choice.
         /// 
@@ -254,6 +299,21 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to --------------------------------------
+        ///Minimum Nvidia Driver requirements not met. This will likely cause issues, but the program will continue.
+        ///--------------------------------------
+        ///Installed Nvidia Driver: {0}
+        ///Min. Driver required: {1}
+        ///Consider updating before continuing.
+        ///--------------------------------------.
+        /// </summary>
+        internal static string InfoNVDriverNotMet {
+            get {
+                return ResourceManager.GetString("InfoNVDriverNotMet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Everything complete.
         ///---------------------
         ///Queue start time: {0}
@@ -268,6 +328,28 @@ namespace TcNo_Transcoder {
         internal static string InfoQueueComplete {
             get {
                 return ResourceManager.GetString("InfoQueueComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The context menu is what pops up when you right-click anywhere.
+        ///If you add TcNo-Transcoder to the Windows Context Menu using &quot;shell add&quot;, you can right-click:
+        ///- Files and Folders to:
+        ///    - ADD them to the queue.
+        ///    - START the queue.
+        ///- The background of a folder (The blank section, behind the files):
+        ///    - START the queue.
+        ///You can remove them at any time using &quot;shell remove&quot;
+        ///
+        ///USAGE: shell &lt;add/remove&gt;
+        ///
+        ///NOTE:
+        ///Do not edit the file/folder structure of this program!
+        ///If you move where the program f [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string InfoShell {
+            get {
+                return ResourceManager.GetString("InfoShell", resourceCulture);
             }
         }
         
@@ -297,8 +379,9 @@ namespace TcNo_Transcoder {
         /// <summary>
         ///   Looks up a localized string similar to Welcome to TechNobo&apos;s Video Transcoder {0}
         ///------------------------
-        ///Run with -h or --help to display help.
-        ///Run with -i or --info to display info.
+        ///Run with -h or --help to display help. (Or enter &quot;help&quot; below)
+        ///Run with -i or --info to display info. (Or enter &quot;info&quot; below)
+        ///To add/remove context menu option (Right clicking files) enter &quot;help shell&quot; below.
         ///------------------------.
         /// </summary>
         internal static string InfoWelcome {

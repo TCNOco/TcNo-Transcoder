@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,7 +18,7 @@ namespace TcNo_Transcoder
 {
     class Constants
     {
-        public const string Version = "0.2.0";
+        public const string Version = "0.3.0";
         // NvencC 4.31 info:
         // - Released: 12/02/2019
         // - GitHub: https://github.com/rigaya/NVEnc/releases
@@ -32,9 +33,9 @@ namespace TcNo_Transcoder
             /////////////////////////////////////--------------------------------
             // TODO:
             // Queue processing [DONE]
-            // Add REMOVE from registry launch option to TcNo-Transcode-ContextMenu
-            // Add commands to ADD and REMOVE from registry (Launching TcNo-Transcode-ContextMenu.exe)
-            // -- Possibly check Nvidia driver version, for incompatibility warning (Will still let program continue, with error)
+            // Add REMOVE from registry launch option to TcNo-Transcode-ContextMenu [DONE]
+            // Add commands to ADD and REMOVE from registry (Launching TcNo-Transcode-ContextMenu.exe) [DONE]
+            // -- Possibly check Nvidia driver version, for incompatibility warning (Will still let program continue, with error) [DONE]
             // Clean up files
             // Update Wiki for C# version
             // Update NvencC
@@ -42,7 +43,6 @@ namespace TcNo_Transcoder
             // Add FFMPEG compatability (Possibly a second settings file, and/or a whole new settings folder. Shared settings?
             /////////////////////////////////////--------------------------------
             Console.Title = "TechNobo's Transcoder";
-            Console.TreatControlCAsInput = true; // Prevent example from ending if CTL+C is pressed.
             Global.ExeLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Directory.SetCurrentDirectory(Global.ExeLocation); // Make sure it's running in the right directory. Without this, -q and --queue from Shell command (via Registry) fails, as it's running in the wrong folder.
             Functions.LoadSettingsFile();
@@ -53,6 +53,10 @@ namespace TcNo_Transcoder
             Functions.CheckIfCustomFolder();
 
             Console.WriteLine(String.Format(GlobalStrings.InfoWelcome, Constants.Version) + "\n");
+
+            Functions.GetNvidiaDriver();
+            Functions.GraphicsDriverMet();
+
 
             if (args.Length != 0)
             {
@@ -65,7 +69,7 @@ namespace TcNo_Transcoder
                         break;
                     case "-i":
                     case "--info":
-                        Console.WriteLine("INFO");
+                        Functions.Information("Info");
                         Functions.AnyKeyToClose();
                         break;
                     case "-d":
@@ -82,6 +86,11 @@ namespace TcNo_Transcoder
                     case "--video":
                         Functions.Information("Video");
                         Functions.AnyKeyToClose();
+                        break;
+                    case "-s":
+                    case "--shell":
+                        Functions.Information("Shell info");
+                        Console.WriteLine();
                         break;
                     case "-q":
                     case "--queue":
@@ -159,9 +168,64 @@ namespace TcNo_Transcoder
 
                 while (true)
                 {
-                    // Program launched without arguments
-                    Console.Write("\n" + GlobalStrings.PrgDragDropPrompt + " "); // Asks user to drag in file or folder
-                    string usrInput = Console.ReadLine().Replace("\"", ""); // Remove surrounding quotations, if applicable.
+                    bool CommandInput = true;
+                    string usrInput = "";
+                    while (CommandInput)
+                    {
+                        // Program launched without arguments
+                        Console.Write("\n" + GlobalStrings.PrgDragDropPrompt + " "); // Asks user to drag in file or folder
+                        usrInput = Console.ReadLine().Replace("\"", ""); // Remove surrounding quotations, if applicable.
+                        if (!(usrInput == "" || usrInput == String.Empty))
+                        {
+                            string ContextMenuApp = Global.ExeLocation + "\\extra\\TcNo-Transcode-ContextMenu.exe";
+                            ProcessStartInfo ContextInfo = default(ProcessStartInfo);
+
+                            ContextInfo = new ProcessStartInfo(ContextMenuApp)
+                            {
+                                UseShellExecute = true,
+                                Verb = "runas",
+                                WindowStyle = ProcessWindowStyle.Normal,
+                                FileName = ContextMenuApp,
+                                CreateNoWindow = false
+                            };
+
+                            switch (usrInput.ToLower())
+                            {
+                                case "help":
+                                    Functions.Information("Help");
+                                    //Console.WriteLine();
+                                    break;
+                                case "info":
+                                    Functions.Information("Info");
+                                    Console.WriteLine();
+                                    break;
+                                case "help shell":
+                                    Functions.Information("Shell info");
+                                    Console.WriteLine();
+                                    break;
+                                case "shell add":
+                                    Console.WriteLine(GlobalStrings.InfoAdminPrompt);
+                                    ContextInfo.Arguments = "-add";
+                                    Process ContextProcessADD = Process.Start(ContextInfo);
+                                    ContextProcessADD.WaitForExit();
+                                    Console.WriteLine(GlobalStrings.InfoContextMenuComplete);
+                                    break;
+                                case "shell remove":
+                                    Console.WriteLine(GlobalStrings.InfoAdminPrompt);
+                                    ContextInfo.Arguments = "-remove";
+                                    Process ContextProcessREM = Process.Start(ContextInfo);
+                                    ContextProcessREM.WaitForExit();
+                                    Console.WriteLine(GlobalStrings.InfoContextMenuComplete);
+                                    break;
+                                default:
+                                    CommandInput = false;
+                                    break;
+                            }
+
+                        }
+
+                    }
+
 
                     // Set output folder to user settings, or original file's dir, if not specified.
                     string outputFolder = Functions.GetOutputDiretory(usrInput);

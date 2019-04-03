@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Management;
+using System.Globalization;
 
 namespace TcNo_Transcoder
 {
@@ -35,6 +37,12 @@ namespace TcNo_Transcoder
                     break;
                 case "Video":
                     Console.WriteLine(GlobalStrings.InfoVideo, Global.Nvexe);
+                    break;
+                case "Info":
+                    Console.WriteLine(GlobalStrings.Info, Constants.Version, Constants.NvencCVersion, Constants.MinNvidiaDriver);
+                    break;
+                case "Shell info":
+                    Console.WriteLine(GlobalStrings.InfoShell);
                     break;
             }
             Console.WriteLine();
@@ -355,6 +363,34 @@ namespace TcNo_Transcoder
             DateTime d = DateTime.Now;
             string OldQueue = "extra/queue-" + d.Day + '-' + d.Month + '-' + d.Year + ' ' + d.Hour + '-' + d.Minute + '-' + d.Second + ".txt";
             File.Move(Global.QueueFile, OldQueue);
+        }
+        public static void GetNvidiaDriver()
+        {
+            try
+            {
+                foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_VideoController").Get())
+                {
+                    if (obj["Description"].ToString().ToLower().Contains("nvidia"))
+                    {
+                        //gpuName = obj["Description"].ToString().Trim();
+                        string GPUDriver_s = obj["DriverVersion"].ToString().Replace(".", string.Empty).Substring(5);
+                        GPUDriver_s = GPUDriver_s.Substring(0, 3) + "." + GPUDriver_s.Substring(3); // add dot
+                        Global.GPUDriver = float.Parse(GPUDriver_s, CultureInfo.InvariantCulture.NumberFormat);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(GlobalStrings.ErrNoNV);
+            }
+        }
+        public static void GraphicsDriverMet()
+        {
+            float MinNvidiaDriver_f = float.Parse(Constants.MinNvidiaDriver, CultureInfo.InvariantCulture.NumberFormat);
+            if (MinNvidiaDriver_f > Global.GPUDriver)
+            {
+                Console.WriteLine(String.Format(GlobalStrings.InfoNVDriverNotMet, Global.GPUDriver.ToString(), MinNvidiaDriver_f.ToString()));
+            }
         }
     }
 }

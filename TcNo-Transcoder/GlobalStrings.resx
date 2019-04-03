@@ -130,6 +130,9 @@
 Error: {0}</value>
     <comment>Displays when reading of settings.cfg fails.</comment>
   </data>
+  <data name="ErrNoNV" xml:space="preserve">
+    <value>No Nvidia GPU was found. Try run as admin, update drivers or report this issue on GitHub, providing as much info as possible.</value>
+  </data>
   <data name="ErrQueueEmpty" xml:space="preserve">
     <value>queue.exe appears to be empty. Please check the file contains a new file/folder on each new line, with no trailing spaces or extra characters. (A new line at the end of the file is intended)</value>
   </data>
@@ -143,6 +146,20 @@ Please verify the settings file and try again.</value>
   </data>
   <data name="ErrStopped" xml:space="preserve">
     <value>Stopped.</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Version: {0}
+NvencC Version: {1}
+Min. Nvidia Driver Version: {2}
+
+GitHub: https://github.com/TcNobo/TcNo-Transcoder
+GitHub Wiki: https://github.com/TcNobo/TcNo-Transcoder/wiki
+YouTube: https://YouTube.com/TechNobo
+Web: https://tcno.co/</value>
+  </data>
+  <data name="InfoAdminPrompt" xml:space="preserve">
+    <value>Click "yes" when asked if you want to run as admin.
+--&gt; Waiting for program completion...</value>
   </data>
   <data name="InfoAudio" xml:space="preserve">
     <value>TechNobo's Video Transcoder
@@ -190,6 +207,10 @@ GitHub: https://github.com/TcNobo/TcNo-Transcoder
 YouTube: https://YouTube.com/TechNobo
 Web: https://tcno.co/</value>
   </data>
+  <data name="InfoContextMenuComplete" xml:space="preserve">
+    <value>--&gt; Finished!
+You should now see "TcNo-Transcode" in your context menu.</value>
+  </data>
   <data name="InfoDevices" xml:space="preserve">
     <value>NOTE:
 When manually setting: use 0, 1, or any other integer, next to the GPU of your choice.
@@ -215,12 +236,13 @@ Either:
 ---------------------------------------
 
 INFORMATION OPTIONS:
-    -h, --help Displays this help information
-    -i, --info Displays program + author info
-    -d, --devices  Displays available GPUs
-    -a, --audioDisplays available input + output audio codecs/formats
-    -v, --videoDisplays available input + output video codecs/formats
-    -q, --queueInstantly start processing your current queue
+    -h, --help     Displays this help information
+    -i, --info     Displays program + author info
+    -d, --devices     Displays available GPUs
+    -a, --audio     Displays available input + output audio codecs/formats
+    -v, --video     Displays available input + output video codecs/formats
+    -q, --queue     Instantly start processing your current queue
+    -s, --shell     Display help to add/remove context menu shortcuts
 
 ---------------------------------------
 
@@ -247,6 +269,13 @@ To remove it, just run "Remove-Send-To.bat"
 
 
 ---------------------------------------
+General information
+---------------------------------------
+Do NOT change the file/folder structure of this program.
+If you do, things may not work as expected.
+If you move where the files are located, and use the Shell menu: Remove and add them (use "shell help" for more info)
+
+---------------------------------------
 More info
 ---------------------------------------
 For far more information, check the TcNo Transcoder Wiki https://github.com/TcNobo/TcNo-Transcoder/wiki</value>
@@ -257,6 +286,15 @@ For far more information, check the TcNo Transcoder Wiki https://github.com/TcNo
 ---------------------
 Start time: {0} | Finish time: {1}
 ---------------------</value>
+  </data>
+  <data name="InfoNVDriverNotMet" xml:space="preserve">
+    <value>--------------------------------------
+Minimum Nvidia Driver requirements not met. This will likely cause issues, but the program will continue.
+--------------------------------------
+Installed Nvidia Driver: {0}
+Min. Driver required: {1}
+Consider updating before continuing.
+--------------------------------------</value>
   </data>
   <data name="InfoQueueComplete" xml:space="preserve">
     <value>Everything complete.
@@ -269,6 +307,22 @@ Thanks for using TechNobo's Transcoder!
 GitHub: https://github.com/TcNobo/TcNo-Transcoder
 YouTube: https://YouTube.com/TechNobo
 Web: https://tcno.co/</value>
+  </data>
+  <data name="InfoShell" xml:space="preserve">
+    <value>The context menu is what pops up when you right-click anywhere.
+If you add TcNo-Transcoder to the Windows Context Menu using "shell add", you can right-click:
+- Files and Folders to:
+    - ADD them to the queue.
+    - START the queue.
+- The background of a folder (The blank section, behind the files):
+    - START the queue.
+You can remove them at any time using "shell remove"
+
+USAGE: shell &lt;add/remove&gt;
+
+NOTE:
+Do not edit the file/folder structure of this program!
+If you move where the program files are located, remove and add the context menu options, or they will not work!</value>
   </data>
   <data name="InfoVideo" xml:space="preserve">
     <value>TechNobo's Video Transcoder
@@ -291,8 +345,9 @@ To see a list of audio encoders, use -a
   <data name="InfoWelcome" xml:space="preserve">
     <value>Welcome to TechNobo's Video Transcoder {0}
 ------------------------
-Run with -h or --help to display help.
-Run with -i or --info to display info.
+Run with -h or --help to display help. (Or enter "help" below)
+Run with -i or --info to display info. (Or enter "info" below)
+To add/remove context menu option (Right clicking files) enter "help shell" below.
 ------------------------</value>
     <comment>Displays when the program starts</comment>
   </data>
