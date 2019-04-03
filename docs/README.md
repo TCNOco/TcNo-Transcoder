@@ -24,19 +24,17 @@ It's simple to use, fast and efficient.
 
 ## How to use
 
- 1. Download this repo as a .zip and extract it.
- 2. Edit `settings.bat` to your liking.
+ 1. Download the respective release from [Releases](https://github.com/TcNobo/TcNo-Transcoder/releases) and extract it.
+ 2. Edit `settings.cfg` to your liking. (Consider it a template for transcoding)
  3. Either:
-	 -	For single file transcoding:
-		 - Start `NVEncC.bat` with Command Prompt.
-		 - Drag and Drop a video file in.
-	- For multiple file transcoding:
-		- Drag and Drop one or more video files onto the actual `NVEncC.bat` file.
+	 - Start `TcNo-Transcoder.exe` and Drag and Drop a video file or folder in.
+	- Drag and Drop one or more video files or folders onto `TcNo-Transcoder.exe`
 	- Queue up multiple files for later transcoding:
 		- See [Queueing](https://github.com/TcNobo/TcNo-Transcoder/wiki/Queueing) 
- 5. Follow the steps, and you'll have yourself a transcoded file in no time!
+ 5. Follow the steps, and you'll process your videos in no time.
 
-By default; no transcoding to audio is done. You can add such via setting `otherargs` in `settings.bat`
+By default; no transcoding to audio is done, it is copied. You can add such via setting `otherargs` in `settings.cfg`.
+Most people won't need to change this.
 
 ### Check the Wiki for more information: [TcNo Transcoder Wiki](https://github.com/TcNobo/TcNo-Transcoder/wiki)
 
@@ -49,7 +47,7 @@ By default; no transcoding to audio is done. You can add such via setting `other
 
 
 ### Planned:
-FFMPEG support is planned, instead of NVEncC, and possibly more in the future.
+FFMPEG support is planned, on top of NVEncC, and possibly more in the future.
 If you have anything to add, then don't be afraid :)
 
 For more info regarding NVEncC, such as supported codecs: https://github.com/rigaya/NVEnc
