@@ -17,22 +17,24 @@ int main(int argc, char* argv[])
 	/*
 	---------- STRUCTURE ----------
 	Folders:
-		HKEY_CLASSES_ROOT\directory\shell\TcNo-Transcoder << MUIVerb << Add to TcNo Transcode Queue
-		HKEY_CLASSES_ROOT\directory\shell\TcNo-Transcoder << SubCommands << TcNoTranscode.add
+		HKEY_CLASSES_ROOT\directory\shell\TcNo-Transcoder << MUIVerb << TcNo Transcode
+		HKEY_CLASSES_ROOT\directory\shell\TcNo-Transcoder << SubCommands << TcNoTranscode.add;TcNoTranscode.start;TcNoTranscode.new
 
 	Files:
-		HKEY_CLASSES_ROOT\*\shell\TcNo-Transcoder << MUIVerb << Add to TcNo Transcode Queue
-		HKEY_CLASSES_ROOT\*\shell\TcNo-Transcoder << SubCommands << TcNoTranscode.add
+		HKEY_CLASSES_ROOT\*\shell\TcNo-Transcoder << MUIVerb << TcNo Transcode
+		HKEY_CLASSES_ROOT\*\shell\TcNo-Transcoder << SubCommands << TcNoTranscode.add;TcNoTranscode.start;TcNoTranscode.new
 
 	Background of folders:
-		HKEY_CLASSES_ROOT\Directory\Background\shell\TcNo-Transcoder\ << MUIVerb << Start TcNo Transcode Queue
-		HKEY_CLASSES_ROOT\directory\shell\TcNo-Transcoder << SubCommands << TcNoTranscode.start
+		HKEY_CLASSES_ROOT\Directory\Background\shell\TcNo-Transcoder\ << MUIVerb << TcNo Transcode
+		HKEY_CLASSES_ROOT\directory\shell\TcNo-Transcoder << SubCommands << TcNoTranscode.start;TcNoTranscode.new
 
 	Commands:
 		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.add << Add to Queue
 		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.add\command << \"TcNo-Transcoder-Queue.exe\" \"%1\"
 		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.start << Start transcode queue
 		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.start\command << [main program exe] -q
+		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.new << New transcode queue
+		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.new\command << [main program exe] -n
 	-------------------------------
 	*/
 	// Check whether the computer is 64 or 32 bit. Commands will be added to WOW64 on x64, and won't work in context menu (Not sure why?), but this fixes them.
@@ -72,12 +74,15 @@ int main(int argc, char* argv[])
 
 		std::string s_ATQCOMM = "\"" + QueueManager + "\" \"%1\"";
 		std::string s_SQCOMM = "\"" + TranscoderExe + "\" \"-q\"";
+		std::string s_NQCOMM = "\"" + TranscoderExe + "\" \"-n\"";
 
 
 		TCHAR ATQCOMM[2048];
 		TCHAR SQCOMM[2048];
+		TCHAR NQCOMM[2048];
 		_tcscpy_s(ATQCOMM, CA2T(s_ATQCOMM.c_str()));
 		_tcscpy_s(SQCOMM, CA2T(s_SQCOMM.c_str()));
+		_tcscpy_s(NQCOMM, CA2T(s_NQCOMM.c_str()));
 
 
 		HKEY hKey;
@@ -88,15 +93,17 @@ int main(int argc, char* argv[])
 		LPCWSTR dirBackground = L"Directory\\Background\\shell\\TcNo-Transcoder";
 		LPCWSTR HKLMMSadd = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\TcNoTranscode.add";
 		LPCWSTR HKLMMSstart = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\TcNoTranscode.start";
+		LPCWSTR HKLMMSnew = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\TcNoTranscode.new";
 		LPCWSTR HKLMMSaddCOM = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\TcNoTranscode.add\\command";
 		LPCWSTR HKLMMSstartCOM = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\TcNoTranscode.start\\command";
+		LPCWSTR HKLMMSnewCOM = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\TcNoTranscode.new\\command";
 
 		LPCSTR subkey = "Directory\\shell\\TcNo-Transcoder\\MUIVerb";
 		TCHAR TC[] = L"TcNo Transcoder";
 		TCHAR STCQ[] = L"Start TcNo Transcode Queue";
-		TCHAR TCS[] = L"TcNoTranscode.start";
+		TCHAR TCS[] = L"TcNoTranscode.start;TcNoTranscode.new";
 
-		TCHAR AddStart[] = L"TcNoTranscode.add;TcNoTranscode.start";
+		TCHAR AllComms[] = L"TcNoTranscode.add;TcNoTranscode.start;TcNoTranscode.new";
 
 		/*
 			----------
@@ -111,7 +118,7 @@ int main(int argc, char* argv[])
 		RegCloseKey(hKey);
 
 		RegOpenKeyEx(HKEY_CLASSES_ROOT, dirshell, 0, KEY_SET_VALUE, &hKey);
-		RegSetValueEx(hKey, TEXT("SubCommands"), 0, REG_SZ, (LPBYTE)AddStart, sizeof(AddStart));
+		RegSetValueEx(hKey, TEXT("SubCommands"), 0, REG_SZ, (LPBYTE)AllComms, sizeof(AllComms));
 		RegCloseKey(hKey);
 
 		/*
@@ -127,7 +134,7 @@ int main(int argc, char* argv[])
 		RegCloseKey(hKey);
 
 		RegOpenKeyEx(HKEY_CLASSES_ROOT, dirAllShell, 0, KEY_SET_VALUE, &hKey);
-		RegSetValueEx(hKey, TEXT("SubCommands"), 0, REG_SZ, (LPBYTE)AddStart, sizeof(AddStart));
+		RegSetValueEx(hKey, TEXT("SubCommands"), 0, REG_SZ, (LPBYTE)AllComms, sizeof(AllComms));
 		RegCloseKey(hKey);
 
 		/*
@@ -175,6 +182,18 @@ int main(int argc, char* argv[])
 		RegSetValueEx(hKey, NULL, 0, REG_SZ, (LPBYTE)SQCOMM, sizeof(SQCOMM));
 		RegCloseKey(hKey);
 
+		// HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.clear << Add to Queue
+		RegCreateKeyEx(HKEY_LOCAL_MACHINE, HKLMMSnew, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | WinRegType, NULL, &hKey, NULL);
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, HKLMMSnew, 0, KEY_SET_VALUE | WinRegType, &hKey);
+		TCHAR NQ[] = L"New Queue";
+		RegSetValueEx(hKey, TEXT("MUIVerb"), 0, REG_SZ, (LPBYTE)NQ, sizeof(NQ));
+		RegCloseKey(hKey);
+		// HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\TcNoTranscode.clear\command << [main program exe] - q
+		RegCreateKeyEx(HKEY_LOCAL_MACHINE, HKLMMSnewCOM, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | WinRegType, NULL, &hKey, NULL);
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, HKLMMSnewCOM, 0, KEY_SET_VALUE | WinRegType, &hKey);
+		RegSetValueEx(hKey, NULL, 0, REG_SZ, (LPBYTE)NQCOMM, sizeof(NQCOMM));
+		RegCloseKey(hKey);
+
 		return 0;
 	}
 	else if (argument == "-remove") {
@@ -186,6 +205,7 @@ int main(int argc, char* argv[])
 		LPCWSTR CommandStore = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CommandStore\\shell\\";
 		LPCSTR CommAdd = "TcNoTranscode.add";
 		LPCSTR CommStart = "TcNoTranscode.start";
+		LPCSTR CommNew = "TcNoTranscode.new";
 
 		BOOL bSuccess;
 
@@ -196,6 +216,7 @@ int main(int argc, char* argv[])
 		RegOpenKeyEx(HKEY_LOCAL_MACHINE, CommandStore, 0, KEY_SET_VALUE | WinRegType, &hKey);
 		bSuccess = RegDeleteTreeA(hKey, CommAdd);
 		bSuccess = RegDeleteTreeA(hKey, CommStart);
+		bSuccess = RegDeleteTreeA(hKey, CommNew);
 		RegCloseKey(hKey);
 		
 		return 0;

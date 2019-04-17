@@ -18,7 +18,7 @@ namespace TcNo_Transcoder
 {
     class Constants
     {
-        public const string Version = "0.3.1";
+        public const string Version = "0.3.2";
         // NvencC 4.31 info:
         // - Released: 12/02/2019
         // - GitHub: https://github.com/rigaya/NVEnc/releases
@@ -67,32 +67,32 @@ namespace TcNo_Transcoder
                 {
                     case "-h":
                     case "--help":
-                        Functions.Information("Help");
+                        Functions.Information("Help", true);
                         Functions.AnyKeyToClose();
                         break;
                     case "-i":
                     case "--info":
-                        Functions.Information("Info");
+                        Functions.Information("Info", true);
                         Functions.AnyKeyToClose();
                         break;
                     case "-d":
                     case "--devices":
-                        Functions.Information("Devices");
+                        Functions.Information("Devices", true);
                         Functions.AnyKeyToClose();
                         break;
                     case "-a":
                     case "--audio":
-                        Functions.Information("Audio");
+                        Functions.Information("Audio", true);
                         Functions.AnyKeyToClose();
                         break;
                     case "-v":
                     case "--video":
-                        Functions.Information("Video");
+                        Functions.Information("Video", true);
                         Functions.AnyKeyToClose();
                         break;
                     case "-s":
                     case "--shell":
-                        Functions.Information("Shell info");
+                        Functions.Information("Shell info", true);
                         Console.WriteLine();
                         break;
                     case "-q":
@@ -112,6 +112,10 @@ namespace TcNo_Transcoder
                             }
                         }
                         Functions.AnyKeyToClose();
+                        break;
+                    case "-n":
+                    case "--new":
+                        Functions.NewQueue();
                         break;
                 }
 
@@ -195,15 +199,15 @@ namespace TcNo_Transcoder
                             switch (usrInput.ToLower())
                             {
                                 case "help":
-                                    Functions.Information("Help");
+                                    Functions.Information("Help", false);
                                     //Console.WriteLine();
                                     break;
                                 case "info":
-                                    Functions.Information("Info");
+                                    Functions.Information("Info", false);
                                     Console.WriteLine();
                                     break;
                                 case "help shell":
-                                    Functions.Information("Shell info");
+                                    Functions.Information("Shell info", false);
                                     Console.WriteLine();
                                     break;
                                 case "shell add":

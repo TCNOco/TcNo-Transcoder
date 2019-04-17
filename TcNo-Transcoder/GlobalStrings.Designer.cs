@@ -119,11 +119,30 @@ namespace TcNo_Transcoder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The requested file was not found! Please make sure that it exists.
+        ///File: {0}.
+        /// </summary>
+        internal static string ErrFileNotFoundException {
+            get {
+                return ResourceManager.GetString("ErrFileNotFoundException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Nvidia GPU was found. Try run as admin, update drivers or report this issue on GitHub, providing as much info as possible..
         /// </summary>
         internal static string ErrNoNV {
             get {
                 return ResourceManager.GetString("ErrNoNV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was no queue file found. The program will automatically create one when you add to it. You can, of course, create a &quot;queue.txt&quot; and add to it yourself, leaving an extra new line at the end..
+        /// </summary>
+        internal static string ErrNoQueue {
+            get {
+                return ResourceManager.GetString("ErrNoQueue", resourceCulture);
             }
         }
         
@@ -147,11 +166,22 @@ namespace TcNo_Transcoder {
         
         /// <summary>
         ///   Looks up a localized string similar to ERROR: {0} was not found in the settings file, or there was another error involving it.
-        ///Please verify the settings file and try again..
+        ///Please verify the settings file and try again.
+        ///NOTE: The next time this program is run, the settings will reset (if the issue was not solved). Your old settings will be stored in settings.cfg.old. Feel free to add them back..
         /// </summary>
         internal static string ErrSettingNotFound {
             get {
                 return ResourceManager.GetString("ErrSettingNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: {0} was not found in the settings file again.
+        ///Settings have been reset, and program will launch normally on next start. Your old settings are located in settings.cfg.old..
+        /// </summary>
+        internal static string ErrSettingNotFound2 {
+            get {
+                return ResourceManager.GetString("ErrSettingNotFound2", resourceCulture);
             }
         }
         
@@ -161,6 +191,16 @@ namespace TcNo_Transcoder {
         internal static string ErrStopped {
             get {
                 return ResourceManager.GetString("ErrStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested transcode file already exists. To overwrite, set &quot;OverwriteExisting&quot; to 1 in yout settings file.
+        ///File: {0}.
+        /// </summary>
+        internal static string ErrTranscodeExists {
+            get {
+                return ResourceManager.GetString("ErrTranscodeExists", resourceCulture);
             }
         }
         
@@ -393,6 +433,7 @@ namespace TcNo_Transcoder {
         ///Run with -h or --help to display help. (Or enter &quot;help&quot; below)
         ///Run with -i or --info to display info. (Or enter &quot;info&quot; below)
         ///To add/remove context menu option (Right clicking files) enter &quot;help shell&quot; below.
+        ///Other commands to enter below: help, info
         ///------------------------.
         /// </summary>
         internal static string InfoWelcome {

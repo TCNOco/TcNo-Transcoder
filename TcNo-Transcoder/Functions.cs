@@ -12,7 +12,7 @@ namespace TcNo_Transcoder
 {
     class Functions
     {
-        public static void Information(string SIn)
+        public static void Information(string SIn, bool exit)
         {
             int BeforeLeft = Console.CursorLeft;
             int BeforeTop = Console.CursorTop;
@@ -46,9 +46,12 @@ namespace TcNo_Transcoder
                     break;
             }
             Console.WriteLine();
-            Console.WriteLine(GlobalStrings.PrgAnyKeyToClose);
-            ReadKeyScrollUpDown(BeforeLeft, BeforeTop);
-            System.Environment.Exit(1);
+            if (exit)
+            {
+                Console.WriteLine(GlobalStrings.PrgAnyKeyToClose);
+                ReadKeyScrollUpDown(BeforeLeft, BeforeTop);
+                System.Environment.Exit(1);
+            }
         }
         public static void ReadKeyScrollUpDown(int BeforeLeft, int BeforeTop)
         {  
@@ -81,15 +84,15 @@ namespace TcNo_Transcoder
         {
             try
             {
-                string SettingsFileLocation = String.Format(@"{0}\settings.cfg", Global.ExeLocation);
-                if (!File.Exists(SettingsFileLocation))
+                Global.SettingsFileLocation = String.Format(@"{0}\settings.cfg", Global.ExeLocation);
+                if (!File.Exists(Global.SettingsFileLocation))
                 {
                     Console.WriteLine(GlobalStrings.ErrFailedSettingsFind + '\n');
-                    File.WriteAllLines(SettingsFileLocation, GlobalStrings._LOCALISEDSETTINGS.Split('\n'));
+                    File.WriteAllLines(Global.SettingsFileLocation, GlobalStrings._LOCALISEDSETTINGS.Split('\n'));
                 }
 
 
-                string[] lines = System.IO.File.ReadAllLines(SettingsFileLocation);
+                string[] lines = System.IO.File.ReadAllLines(Global.SettingsFileLocation);
                 foreach (var line in lines)
                 {
                     if (line.Contains('='))
@@ -116,7 +119,7 @@ namespace TcNo_Transcoder
             string[] SettingsList = new string[] { "OutputFormat", "CopyAudio", "AudioCodec", "Suffix", "OutputDirectory", "Resolution", "FPS",
                 "VideoCodec", "EncoderProfile", "Level", "Preset", "OutputDepth", "CUDASchedule", "DecodeMode", "SampleAspectRatio", "Lookahead",
                 "GOPLength", "BFrames", "ReferenceFrames", "MVPrecision", "Colormatrix", "CABAC", "Deblock", "Bitrate", "VBRQuality", "MaxBitrate",
-                "GPU", "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion" };
+                "GPU", "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion", "DelQueueOnNew", "OverwriteExisting" };
             foreach (var s in SettingsList)
             {
                 try
@@ -125,11 +128,23 @@ namespace TcNo_Transcoder
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine(GlobalStrings.ErrSettingNotFound, s);
+                    if (File.Exists(Global.AttemptFile))
+                    {
+                        Console.WriteLine(GlobalStrings.ErrSettingNotFound2, s);
+                        File.Delete(Global.AttemptFile);
+                        File.Move(Global.SettingsFileLocation, Global.SettingsFileLocation + ".old");
+                    }
+                    else
+                    {
+                        Console.WriteLine(GlobalStrings.ErrSettingNotFound, s);
+                        File.Create(Global.AttemptFile);
+                    }
                     Console.WriteLine();
                     AnyKeyToClose();
                 }
             }
+            if (File.Exists(Global.AttemptFile))
+                File.Delete(Global.AttemptFile);
         }
         #endregion
         // -----------------------------------
@@ -217,7 +232,6 @@ namespace TcNo_Transcoder
             else
                 Console.WriteLine("OVERRIDE ENABLED! Input and Output automated, everything else is up to what you add to OtherArgs.");
             Global.InputFile = inputFile;
-            Global.OutputFile = OutputFileString(outputFolder, inputFile);
             Arg += " --output \"" + Global.OutputFile + "\"";
             if (Global.Settings["OtherArgs"] != "")
             {
@@ -285,7 +299,16 @@ namespace TcNo_Transcoder
         public static void ProcessFile(string inFile, string outFolder)
         {
             Console.WriteLine("\n" + Global.LineString + "\n" + String.Format(GlobalStrings.PrgNowProcessing, inFile, OutputFileString(outFolder, inFile)));
-            Functions.RunProgram(Global.NvexeFull, Functions.GetTaskArgs(inFile, outFolder));
+            Global.OutputFile = OutputFileString(outFolder, inFile);
+            if (Global.Settings["OverwriteExisting"] != "1")
+            {
+                if (File.Exists(Global.OutputFile))
+                {
+                    Console.WriteLine(String.Format(GlobalStrings.ErrTranscodeExists, Global.OutputFile));
+                    return;
+                }
+            }
+            RunProgram(Global.NvexeFull, Functions.GetTaskArgs(inFile, outFolder));
         }
 
         public static bool IsDirectory(string inObject)
@@ -297,14 +320,9 @@ namespace TcNo_Transcoder
         {
             try
             {
-                if ((File.GetAttributes(inObject) & FileAttributes.Directory) == FileAttributes.Directory)
-                {
-                    return true;
-                }
-                else
-                {
-                    return true;
-                }
+                if ((File.GetAttributes(inObject) & FileAttributes.Directory) == FileAttributes.Directory) { }
+                return true;
+                
             }
             catch (Exception)
             {
@@ -333,10 +351,35 @@ namespace TcNo_Transcoder
                         ProcessQueue();
                         break;
                     case ConsoleKey.N:
-                        Functions.AnyKeyToClose();
+                        AnyKeyToClose();
                         break;
                 }
             }
+        }
+        public static void NewQueue()
+        {
+            if (File.Exists(Global.QueueFile)){
+                if (Global.Settings["DelQueueOnNew"] == "1")
+                {
+                    File.Delete(Global.QueueFile);
+                }
+                else
+                {
+                    DateQueueMove();
+                }
+                System.Environment.Exit(1);
+            }
+            else
+            {
+                Console.WriteLine(GlobalStrings.ErrNoQueue);
+                AnyKeyToClose();
+            }
+        }
+        public static void DateQueueMove()
+        {
+            DateTime d = DateTime.Now;
+            string OldQueue = "extra/queue-" + d.Day + '-' + d.Month + '-' + d.Year + ' ' + d.Hour + '-' + d.Minute + '-' + d.Second + ".txt";
+            File.Move(Global.QueueFile, OldQueue);
         }
 
         public static void ProcessQueue()
@@ -353,16 +396,22 @@ namespace TcNo_Transcoder
                     string line = l.Replace("\"", "").Replace("\r", "");
                     // Set output folder to user settings, or original file's dir, if not specified.
                     string outputFolder = Functions.GetOutputDiretory(line);
-                    if (Functions.IsDirectory(line))
+                    try
                     {
-                        Console.WriteLine(String.Format(GlobalStrings.PrgQueueFollowingFiles, line) + "\n" + Global.LineString);
-                        Functions.ListFileOrFolder(line);
-                        Console.WriteLine(Global.LineString + "\n");
+                        if (Functions.IsDirectory(line))
+                        {
+                            Console.WriteLine(String.Format(GlobalStrings.PrgQueueFollowingFiles, line) + "\n" + Global.LineString);
+                            Functions.ListFileOrFolder(line);
+                            Console.WriteLine(Global.LineString + "\n");
+                        }
+                        Global.EncodeStartTime = DateTime.Now;
+                        Functions.ProcessFileOrFolder(line, outputFolder);
+                        Console.WriteLine("\n" + GlobalStrings.InfoItemComplete, Global.EncodeStartTime, DateTime.Now);
                     }
-                    Global.EncodeStartTime = DateTime.Now;
-                    Functions.ProcessFileOrFolder(line, outputFolder);
-                    Console.WriteLine("\n" + GlobalStrings.InfoItemComplete, Global.EncodeStartTime, DateTime.Now);
-
+                    catch (System.IO.FileNotFoundException)
+                    {
+                        Console.WriteLine(String.Format(GlobalStrings.ErrFileNotFoundException, line));
+                    }
                 }
             }
             QueueComplete();
@@ -384,27 +433,18 @@ namespace TcNo_Transcoder
             }
             else
             {
-                DateTime d = DateTime.Now;
-                string OldQueue = "extra/queue-" + d.Day + '-' + d.Month + '-' + d.Year + ' ' + d.Hour + '-' + d.Minute + '-' + d.Second + ".txt";
-                File.Move(Global.QueueFile, OldQueue);
+                DateQueueMove();
             }
 
             if (!(Global.Settings["AfterCompletion"] == "" || Global.Settings["AfterCompletion"] == String.Empty))
             {
-                try
-                {
                     string AC = Global.Settings["AfterCompletion"].Replace("%outF%", Global.OutputFile);
 
                     Process ContextProcessADD = Process.Start(AC);
                     ContextProcessADD.WaitForExit();
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
             }
         }
+
         public static void GetNvidiaDriver()
         {
             try

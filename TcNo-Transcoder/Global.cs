@@ -10,6 +10,8 @@ namespace TcNo_Transcoder
     {
         public static string LineString = "---------------------";
         public static string QueueFile = "extra/queue.txt";
+        public static string AttemptFile = "extra/attempt";
+        public static string SettingsFileLocation = "";
 
         // Global variable definitions
         // Global static strings that won't change, and can be localised will be located in GlobalStr.resx, and their different language counterparts.

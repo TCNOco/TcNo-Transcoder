@@ -135,8 +135,15 @@ Error:
 Error: {0}</value>
     <comment>Displays when reading of settings.cfg fails.</comment>
   </data>
+  <data name="ErrFileNotFoundException" xml:space="preserve">
+    <value>The requested file was not found! Please make sure that it exists.
+File: {0}</value>
+  </data>
   <data name="ErrNoNV" xml:space="preserve">
     <value>No Nvidia GPU was found. Try run as admin, update drivers or report this issue on GitHub, providing as much info as possible.</value>
+  </data>
+  <data name="ErrNoQueue" xml:space="preserve">
+    <value>There was no queue file found. The program will automatically create one when you add to it. You can, of course, create a "queue.txt" and add to it yourself, leaving an extra new line at the end.</value>
   </data>
   <data name="ErrQueueEmpty" xml:space="preserve">
     <value>queue.exe appears to be empty. Please check the file contains a new file/folder on each new line, with no trailing spaces or extra characters. (A new line at the end of the file is intended)</value>
@@ -146,11 +153,20 @@ Error: {0}</value>
   </data>
   <data name="ErrSettingNotFound" xml:space="preserve">
     <value>ERROR: {0} was not found in the settings file, or there was another error involving it.
-Please verify the settings file and try again.</value>
+Please verify the settings file and try again.
+NOTE: The next time this program is run, the settings will reset (if the issue was not solved). Your old settings will be stored in settings.cfg.old. Feel free to add them back.</value>
     <comment>Displays when a setting is not found during settings.cfg verification.</comment>
+  </data>
+  <data name="ErrSettingNotFound2" xml:space="preserve">
+    <value>ERROR: {0} was not found in the settings file again.
+Settings have been reset, and program will launch normally on next start. Your old settings are located in settings.cfg.old.</value>
   </data>
   <data name="ErrStopped" xml:space="preserve">
     <value>Stopped.</value>
+  </data>
+  <data name="ErrTranscodeExists" xml:space="preserve">
+    <value>The requested transcode file already exists. To overwrite, set "OverwriteExisting" to 1 in yout settings file.
+File: {0}</value>
   </data>
   <data name="Info" xml:space="preserve">
     <value>Version: {0}
@@ -248,6 +264,7 @@ INFORMATION OPTIONS:
     -v, --video     Displays available input + output video codecs/formats
     -q, --queue     Instantly start processing your current queue
     -s, --shell     Display help to add/remove context menu shortcuts
+    -n, --new     Creates a new queue, based on settings file.
 
 ---------------------------------------
 
@@ -353,6 +370,7 @@ To see a list of audio encoders, use -a
 Run with -h or --help to display help. (Or enter "help" below)
 Run with -i or --info to display info. (Or enter "info" below)
 To add/remove context menu option (Right clicking files) enter "help shell" below.
+Other commands to enter below: help, info
 ------------------------</value>
     <comment>Displays when the program starts</comment>
   </data>
@@ -597,6 +615,11 @@ MaxBitrate=-1
 # ----------------------------------------------------
 # --------------------- OPTIONAL ---------------------
 # ----------------------------------------------------
+# Overwrite existing transcoded file, if exists.
+# Default: 0 -&gt; Will not overwrite.
+# 1 -&gt; Overwrites existing transcode, if exists already.
+OverwriteExisting=0
+
 # Choose a GPU to use
 # To get a list of GPU's, run the command "NVEncC --check-device" or "NVEncC64 --check-device"
 # MAKE SURE YOU KNOW WHAT GPU YOU'RE SETTING IT TO!
@@ -625,6 +648,10 @@ Override=0
 # Default is 0
 DeleteOldQueue=0
 
+# Delete queue when creating a new queue, via Shell menu.
+# Default: 0
+# 1 = Delete queue, when "New queue" used.
+DelQueueOnNew=0
 
 # Run command after completion.
 # When a file finishes transcoding, the command will run.
