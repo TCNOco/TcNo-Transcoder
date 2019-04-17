@@ -32,16 +32,9 @@ namespace TcNo_Transcoder
 
             /////////////////////////////////////--------------------------------
             // TODO:
-            // Queue processing [DONE]
-            // Add REMOVE from registry launch option to TcNo-Transcode-ContextMenu [DONE]
-            // Add commands to ADD and REMOVE from registry (Launching TcNo-Transcode-ContextMenu.exe) [DONE]
-            // -- Possibly check Nvidia driver version, for incompatibility warning (Will still let program continue, with error) [DONE]
-            // Clean up files [DONE]
-            // Update Wiki for C# version [DONE]
-            // Check if file exists before processing [DONE]
-            // HOTFIX: "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion" [DONE]
             // Update settings.cfg, for easier reading.
             // Update NvencC
+            // Add update checker, that checks with a file on GitHub. Just notifies user and gives the link to download the update. Can only do when committed to Main, however.
             // -- v Future v --
             // Add FFMPEG compatability (Possibly a second settings file, and/or a whole new settings folder. Shared settings?
             /////////////////////////////////////--------------------------------
