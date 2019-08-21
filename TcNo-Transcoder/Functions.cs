@@ -87,8 +87,26 @@ namespace TcNo_Transcoder
                 Global.SettingsFileLocation = String.Format(@"{0}\settings.cfg", Global.ExeLocation);
                 if (!File.Exists(Global.SettingsFileLocation))
                 {
+                    Console.WriteLine(GlobalStrings.InfoSettingsOptions + "\n\n");
+                    while (true)
+                    {
+                        Console.Write(GlobalStrings.InfoSettingsOptionsResponse + ' ');
+                        string response = Console.ReadLine();
+                        if (response == "1" || response.ToLower() == "y")
+                        {
+                            Console.Clear();
+                            File.WriteAllLines(Global.SettingsFileLocation, GlobalStrings._LOCALISEDSETTINGS_SIMPLE.Split('\n'));
+                            break;
+                        }
+                        else if (response == "2" || response.ToLower() == "n")
+                        {
+                            Console.Clear();
+                            File.WriteAllLines(Global.SettingsFileLocation, GlobalStrings._LOCALISEDSETTINGS_ADVANCED.Split('\n'));
+                            break;
+                        }
+                    }
+
                     Console.WriteLine(GlobalStrings.ErrFailedSettingsFind + '\n');
-                    File.WriteAllLines(Global.SettingsFileLocation, GlobalStrings._LOCALISEDSETTINGS.Split('\n'));
                 }
 
 
@@ -117,7 +135,7 @@ namespace TcNo_Transcoder
         public static void VerifySettingsFile()
         {
             string[] SettingsList = new string[] { "OutputFormat", "CopyAudio", "AudioCodec", "Suffix", "OutputDirectory", "Resolution", "FPS",
-                "VideoCodec", "EncoderProfile", "Level", "Preset", "OutputDepth", "CUDASchedule", "DecodeMode", "SampleAspectRatio", "Lookahead",
+                "VideoCodec", "EncoderProfile", "Level", "Preset", "OutputDepth", "CUDASchedule", "SampleAspectRatio", "Lookahead",
                 "GOPLength", "BFrames", "ReferenceFrames", "MVPrecision", "Colormatrix", "CABAC", "Deblock", "Bitrate", "VBRQuality", "MaxBitrate",
                 "GPU", "OtherArgs", "Override", "DeleteOldQueue", "AfterCompletion", "DelQueueOnNew", "OverwriteExisting" };
             foreach (var s in SettingsList)
@@ -189,7 +207,6 @@ namespace TcNo_Transcoder
             string Arg = "-i \"" + inputFile + "\"";
             if (Global.Settings["Override"] == "" || Global.Settings["Override"] == String.Empty || Global.Settings["Override"] == "0")
             {
-                Arg += " --" + Global.Settings["DecodeMode"];
                 Arg += " --codec " + Global.Settings["VideoCodec"];
                 Arg += " --fps " + Global.Settings["FPS"];
                 Arg += " --output-res " + Global.Settings["Resolution"];
@@ -204,11 +221,13 @@ namespace TcNo_Transcoder
                 Arg += " --ref " + Global.Settings["ReferenceFrames"];
                 Arg += " --mv-precision " + Global.Settings["MVPrecision"];
                 Arg += " --colormatrix " + Global.Settings["Colormatrix"];
+
+                // Copy audio true, or false to use a custom codec, or blank to not copy audio at all.
                 if (Global.Settings["CopyAudio"] == "1")
                 {
                     Arg += " --audio-copy";
                 }
-                else
+                else if (Global.Settings["CopyAudio"] == "0")
                 {
                     Arg += " --audio-codec" + Global.Settings["AudioCodec"];
                 }
@@ -216,11 +235,11 @@ namespace TcNo_Transcoder
                 {
                     Arg += " --sar " + Global.Settings["SampleAspectRatio"];
                 }
-                if (Global.Settings["CABAC"] == "1")
+                if (Global.Settings["VideoCodec"] == "h264" && Global.Settings["CABAC"] == "1") // Only for h264.
                 {
                     Arg += " --cabac";
                 }
-                if (Global.Settings["Deblock"] == "1")
+                if (Global.Settings["VideoCodec"] == "h264" && Global.Settings["Deblock"] == "1") // Only for h264.
                 {
                     Arg += " --deblock";
                 }
@@ -473,5 +492,6 @@ namespace TcNo_Transcoder
                 Console.WriteLine(String.Format(GlobalStrings.InfoNVDriverNotMet, Global.GPUDriver.ToString(), MinNvidiaDriver_f.ToString()));
             }
         }
+
     }
 }

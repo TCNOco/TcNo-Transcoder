@@ -71,15 +71,37 @@ namespace TcNo_Transcoder {
         ///# ----------------------------------------------------
         ///# --------------------- REQUIRED ---------------------
         ///# ----------------------------------------------------
+        ///OutputFormat=mp4
+        ///CopyAudio=0
+        ///
+        ///# REQUIRES CopyAudio setting  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string _LOCALISEDSETTINGS_ADVANCED {
+            get {
+                return ResourceManager.GetString("_LOCALISEDSETTINGS_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # ----------------------------------------------------
+        ///# Welcome to TechNobo&apos;s Video Transcoder settings
+        ///# Created by TechNobo (Wesley Pyburn): https://tcno.co/
+        ///# GitHub Repo: https://github.com/TcNobo/TcNo-Transcoder
+        ///# ----------------------------------------------------
+        ///
+        ///
+        ///# ----------------------------------------------------
+        ///# --------------------- REQUIRED ---------------------
+        ///# ----------------------------------------------------
         ///# Output format
         ///OutputFormat=mp4
         ///
         ///# Copy the audio?
         ///# Yes  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string _LOCALISEDSETTINGS {
+        internal static string _LOCALISEDSETTINGS_SIMPLE {
             get {
-                return ResourceManager.GetString("_LOCALISEDSETTINGS", resourceCulture);
+                return ResourceManager.GetString("_LOCALISEDSETTINGS_SIMPLE", resourceCulture);
             }
         }
         
@@ -125,6 +147,15 @@ namespace TcNo_Transcoder {
         internal static string ErrFileNotFoundException {
             get {
                 return ResourceManager.GetString("ErrFileNotFoundException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested file was not found, or was inaccessible.
+        /// </summary>
+        internal static string ErrInaccess {
+            get {
+                return ResourceManager.GetString("ErrInaccess", resourceCulture);
             }
         }
         
@@ -379,6 +410,27 @@ namespace TcNo_Transcoder {
         internal static string InfoQueueComplete {
             get {
                 return ResourceManager.GetString("InfoQueueComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no settings.cfg file in the program&apos;s directory. This is likely your first launch.
+        ///Pick a settings file to create, and enter it&apos;s number below:
+        ///- 1: Settings, with extra information. (For new users)
+        ///- 2: Just settings. No other information. (For advanced users).
+        /// </summary>
+        internal static string InfoSettingsOptions {
+            get {
+                return ResourceManager.GetString("InfoSettingsOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a number:.
+        /// </summary>
+        internal static string InfoSettingsOptionsResponse {
+            get {
+                return ResourceManager.GetString("InfoSettingsOptionsResponse", resourceCulture);
             }
         }
         

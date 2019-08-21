@@ -18,11 +18,11 @@ namespace TcNo_Transcoder
 {
     class Constants
     {
-        public const string Version = "0.3.2";
-        // NvencC 4.31 info:
-        // - Released: 12/02/2019
+        public const string Version = "0.3.3";
+        // NvencC 4.45 info:
+        // - Released: 19/08/2019
         // - GitHub: https://github.com/rigaya/NVEnc/releases
-        public const string NvencCVersion = "4.31";
+        public const string NvencCVersion = "4.45";
         public const string MinNvidiaDriver = "418.81";
     }
     class Program
@@ -32,8 +32,6 @@ namespace TcNo_Transcoder
 
             /////////////////////////////////////--------------------------------
             // TODO:
-            // Update settings.cfg, for easier reading.
-            // Update NvencC
             // Add update checker, that checks with a file on GitHub. Just notifies user and gives the link to download the update. Can only do when committed to Main, however.
             // -- v Future v --
             // Add FFMPEG compatability (Possibly a second settings file, and/or a whole new settings folder. Shared settings?
@@ -52,7 +50,6 @@ namespace TcNo_Transcoder
 
             Functions.GetNvidiaDriver();
             Functions.GraphicsDriverMet();
-
 
             if (args.Length != 0)
             {
@@ -260,7 +257,7 @@ namespace TcNo_Transcoder
                     }
                     else
                     {
-                        Console.WriteLine("The requested file was not found, or was inaccessible");
+                        Console.WriteLine(GlobalStrings.ErrInaccess);
                     }
                 }
             }
