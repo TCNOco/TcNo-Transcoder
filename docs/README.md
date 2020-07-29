@@ -1,5 +1,6 @@
 
 
+
 <p align="center">
     <a href="">
 	<img src="/docs/img/banner1.png"></a>
@@ -15,6 +16,10 @@
     <img alt="Repo size" src="https://img.shields.io/github/repo-size/TcNobo/TcNo-Transcoder.svg?label=Repo%20size&logo=GitHub&style=flat-square">
 </p>
 
+### Status: Abandoned / Indefinately on hold
+This was a nice project to learn DOS/Windows Shel Script and C#, although I have no reason to use the code anymore with a different work style.
+You're more than welcome to look at the code and see if there's something useful. If I ever find a use for this software again in my daily life, I'll probably return to this :)
+<br><br>
 This is a simple Windows based video transcoder, that **copies ALL audio tracks**. It's **simple**, and **extremely fast**, utilizing Nvidia's NVENC.
 
 If you find yourself needing compressed 'proxy' video files for editing software, like Adobe Premiere Pro, and it can't create them itsself due to no multitrack audio support, then this is by far the simplest solution.
